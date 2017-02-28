@@ -11,16 +11,55 @@
     tools:context="edu.cuny.foodproof.Login">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="15px"></TextView>
-        <TextView
+            android:layout_height="15dp"
+            android:text="Username"
+            android:textColor="@android:color/holo_blue_dark"/>
+
+        <EditText
+            android:id="@+id/etUsername"
             android:layout_width="match_parent"
-            android:layout_height="15px"></TextView>
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="@android:color/holo_blue_dark"/>
+
+        />
+        <EditText
+            android:id="@+id/etpassword"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/btLogin"
+            android:text="Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvRegisterLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Register Here"
+            android:textSize="20dp"
+            android:textColor="@android:color/holo_green_dark"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+
+            />
+
+
 
     </LinearLayout>
-
 </RelativeLayout>
