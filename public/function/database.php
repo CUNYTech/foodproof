@@ -15,18 +15,61 @@
 
   function db_query($connection, $sql) {
     $result_set = mysqli_query($connection, $sql);
-    if(substr($sql, 0, 7) == 'SELECT ') {
-      confirm_query($result_set);
-    }
     return $result_set;
   }
 
-  function confirm_query($result_set) {
-    if(!$result_set) {
-      echo"Database query failed.";
-    exit;
-	}
+
+  function add_user($name, $password, $email,$db){
+
+    $sql = "INSERT INTO users";
+    $sql .= "(name,email,password) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . db_escape($db, $name) . "',";
+    $sql .= "'" . db_escape($db, $email). "',";
+    $sql .= "'" . db_escape($db, $password) . "'";
+    $sql .= ");";
+
+    // For INSERT statements, $result is just true/false
+    $result = db_query($db, $sql);
+    if($result) {
+      return true;
+    } else {
+	return false;
+    }
+
+
   }
+
+ function login_user($name,$password,$db){
+	$sql = "SELECT * FROM users ";
+    	$sql .= "WHERE (name='" . db_escape($db,$name) . "') and(password='" . db_escape($db,$password) . "');";
+    	$result = db_query($db, $sql);
+	//echo $sql;		
+	if ($result){
+		return true;
+	}
+
+	return false;
+ }
+
+ function create_token($user,$token,$db){
+    $sql = "INSERT INTO sessions ";
+    $sql .= "(name,token) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . db_escape($db, $user) . "',";
+    $sql .= "'" . db_escape($db, $token). "'";
+    $sql .= ");";
+	echo $sql;
+    // For INSERT statements, $result is just true/false
+    $result = db_query($db, $sql);
+    if($result) {
+      return true;
+    } else {
+        return false;
+    }
+
+	
+ }
 
   function db_fetch_assoc($result_set) {
     return mysqli_fetch_assoc($result_set);
