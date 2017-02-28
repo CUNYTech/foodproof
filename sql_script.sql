@@ -17,6 +17,6 @@ DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
   `user` varchar(255) DEFAULT NULL,
   `token` varchar(255) DEFAULT NULL,
-  'created_at' datetime,
-  PRIMARY KEY (`token`)
-)
+  `created_at` datetime,
+   KEY `token` (`token`)
+)ENGINE=InnoDB;
