@@ -24,7 +24,7 @@ $app->get('/register/{user}/{password}/{email}', function (Request $request, Res
 	$email= $request->getAttribute('email');	
 
 	if(add_user($name,$password,$email,$db)){
-		$out= json_encode(["Result" => "Added"]);
+		$out= json_encode(["Result" => "succeed"]);
     		$response->getBody()->write($out);
 	}
 	else{
@@ -54,12 +54,12 @@ $app->get('/login/{user}/{password}', function (Request $request, Response $resp
     			$response->getBody()->write($out);
 		}
 		else{
-			$response->getBody()->write(json_encode(["Result:"=>"failsd","Token"=>"invalid"]));
+			$response->getBody()->write(json_encode(["Result"=>"failed","Token"=>"invalid"]));
 
 		}
 	}
 	else{
-		$out= json_encode(["Result" => "login failed"]);
+		$out= json_encode(["Result" => "failed"]);
     		$response->getBody()->write($out);
 	}
 
