@@ -50,7 +50,7 @@ $app->get('/login/{user}/{password}', function (Request $request, Response $resp
 		$token = base64_encode(openssl_random_pseudo_bytes(20)); 
 		$result = create_token($name,$token,$db);
 		if ($result){
-			$out= json_encode(["Result" => "logged", "Token" => $token]);
+			$out= json_encode(["Result" => "succeed", "Token" => $token]);
     			$response->getBody()->write($out);
 		}
 		else{

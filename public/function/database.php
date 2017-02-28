@@ -41,11 +41,11 @@
   }
 
  function login_user($name,$password,$db){
-	$sql = "SELECT * FROM users ";
+	$sql = "SELECT name FROM users ";
     	$sql .= "WHERE (name='" . db_escape($db,$name) . "') and(password='" . db_escape($db,$password) . "');";
     	$result = db_query($db, $sql);
-	//echo $sql;		
-	if ($result){
+		
+	if (mysqli_num_rows($result)==1){
 		return true;
 	}
 
@@ -54,12 +54,12 @@
 
  function create_token($user,$token,$db){
     $sql = "INSERT INTO sessions ";
-    $sql .= "(name,token) ";
+    $sql .= "(user,token) ";
     $sql .= "VALUES (";
     $sql .= "'" . db_escape($db, $user) . "',";
     $sql .= "'" . db_escape($db, $token). "'";
     $sql .= ");";
-	echo $sql;
+	//echo $sql;
     // For INSERT statements, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
