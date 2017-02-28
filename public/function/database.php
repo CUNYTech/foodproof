@@ -1,25 +1,31 @@
 <?php
   require_once('db_credentials.php');
 
-  function db_connect() {
+  function db_connect(&$error) {
     $connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
     if(mysqli_connect_errno()) {
       $msg = "Database connection failed: ";
       $msg .= mysqli_connect_error();
       $msg .= " (" . mysqli_connect_errno() . ")";
-      echo $msg;
+      $error['connection Error'] = $msg;
     exit;
 	}
     return $connection;
   }
 
-  function db_query($connection, $sql) {
-    $result_set = mysqli_query($connection, $sql);
-    return $result_set;
+  function db_query($connection, $sql, &$error) {
+    	$result_set = mysqli_query($connection, $sql);
+	if($result_set==false){
+		$error['SQL error']=mysqli_error($connection);
+		return false;
+	}
+	else{
+		return $result_set;
+	}
   }
 
 
-  function add_user($name, $password, $email,$db){
+  function add_user($name, $password, $email,$db, &$error){
 
     $sql = "INSERT INTO users";
     $sql .= "(name,email,password) ";
@@ -30,21 +36,19 @@
     $sql .= ");";
 
     // For INSERT statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
-      return true;
-    } else {
-	return false;
-    }
+    $result = db_query($db, $sql, $error);
+    
+    if(!$result){return false;}
+    else{return true;}
+
 
 
   }
 
- function login_user($name,$password,$db){
+ function login_user($name,$password,$db,&$error){
 	$sql = "SELECT name FROM users ";
     	$sql .= "WHERE (name='" . db_escape($db,$name) . "') and(password='" . db_escape($db,$password) . "');";
-    	$result = db_query($db, $sql);
-		
+    	$result = db_query($db, $sql,$error);
 	if (mysqli_num_rows($result)==1){
 		return true;
 	}
@@ -52,7 +56,7 @@
 	return false;
  }
 
- function create_token($user,$token,$db){
+ function create_token($user,$token,$db,&$error){
     $sql = "INSERT INTO sessions ";
     $sql .= "(user,token) ";
     $sql .= "VALUES (";
@@ -61,12 +65,8 @@
     $sql .= ");";
 	//echo $sql;
     // For INSERT statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
-      return true;
-    } else {
-        return false;
-    }
+    $result = db_query($db, $sql,$error);
+    return $result;
 
 	
  }

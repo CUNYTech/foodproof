@@ -8,27 +8,35 @@ require '../vendor/autoload.php';
 $configuration = [
     'settings' => [
         'displayErrorDetails' => true,
+	'debug'=>true,
     ],
-];
+]
+;
 $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
 
+// manage registration
 $app->get('/register/{user}/{password}/{email}', function (Request $request, Response $response) {
 	require_once 'function/database.php';
-	$db=db_connect();
-	//$name = json_encode(["USER"=>$request->getAttribute('user'), "PASSWORD" =>$request->getAttribute('password'),"Email" =>  $request->getAttribute('email')] );
-    	//$response->getBody()->write($namei);
-
+	$error=[];
+	$error["Result"]= "failed";
+	
+	$db=db_connect($error);
+	
+	//read names from url for noe
 	$name= $request->getAttribute('user');	
 	$password= sha1($request->getAttribute('password'));	
 	$email= $request->getAttribute('email');	
 
-	if(add_user($name,$password,$email,$db)){
+	// add user
+	$add = add_user($name,$password,$email,$db,$error);
+	
+   	if($add){
 		$out= json_encode(["Result" => "succeed"]);
     		$response->getBody()->write($out);
 	}
 	else{
-		$out= json_encode(["Result" => "failed"]);
+		$out= json_encode($error);
     		$response->getBody()->write($out);
 	}
 
@@ -37,29 +45,35 @@ $app->get('/register/{user}/{password}/{email}', function (Request $request, Res
     	return $response;
 });
 
+// manage login
 $app->get('/login/{user}/{password}', function (Request $request, Response $response) {
 	require_once 'function/database.php';
-	$db=db_connect();
-//	$name = json_encode(["USER"=>$request->getAttribute('user'), "PASSWORD" =>$request->getAttribute('password')] );
- //   	$response->getBody()->write($name);;
+	$error=[];
+	//dedfalult error
+	$error["Result"]="failed";
 
+	$db=db_connect($error);
+	// read rom url for now
+	
 	$name= $request->getAttribute('user');	
 	$password= sha1($request->getAttribute('password'));	
-
-	if(login_user($name,$password,$db)){
+	
+	// login
+	$log = login_user($name,$password,$db,$error);
+	if($log){
 		$token = base64_encode(openssl_random_pseudo_bytes(20)); 
-		$result = create_token($name,$token,$db);
+		$result = create_token($name,$token,$db,$error);
 		if ($result){
 			$out= json_encode(["Result" => "succeed", "Token" => $token]);
     			$response->getBody()->write($out);
 		}
 		else{
-			$response->getBody()->write(json_encode(["Result"=>"failed","Token"=>"invalid"]));
+			$response->getBody()->write(json_encode($error));
 
 		}
 	}
 	else{
-		$out= json_encode(["Result" => "failed"]);
+		$out= json_encode($error);
     		$response->getBody()->write($out);
 	}
 
@@ -69,7 +83,7 @@ $app->get('/login/{user}/{password}', function (Request $request, Response $resp
     	return $response;
 });
 
-
+// do default error
 $app->get('/', function (Request $req,  Response $res, $args = []) {
     return $res->withStatus(400)->write('Bad Request');
 });
