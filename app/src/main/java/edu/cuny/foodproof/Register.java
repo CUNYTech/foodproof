@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.EditText;
 
-
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
     Button btRegister;
@@ -24,17 +23,17 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         etEmail = (EditText) findViewById(R.id.etEmail);
         etGender = (EditText) findViewById(R.id.etGender);
         etPassword = (EditText) findViewById(R.id.etPassword);
+        btRegister = (Button) findViewById(R.id.btRegister);
 
         btRegister.setOnClickListener(this);
 
     }
+
     @Override
     public void onClick(View v){
         switch(v.getId()){
             case R.id.btRegister:
-
-
-
+                break;
         }
     }
 }

@@ -10,11 +10,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.EditText;
 
+import java.io.BufferedInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
 public class Login extends AppCompatActivity  implements View.OnClickListener{
 
-    Button bLogin;
+    Button bLogin, bRegister;
     EditText etUsername, etPassword;
-    TextView tvRegisterLink;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,19 +30,40 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         bLogin = (Button) findViewById(R.id.btLogin);
-        tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
-        bLogin.setOnClickListener(this);
+        bRegister = (Button) findViewById(R.id.btRegister);
 
-        tvRegisterLink.setOnClickListener(this);
+        bLogin.setOnClickListener(this);
+        bRegister.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v){
+        String inUsername = etUsername.getText().toString();
+        String inPassword = etPassword.getText().toString();
         switch(v.getId()){
             case R.id.btLogin:
-                //http://ec2-54-90-187-63.compute-1.amazonaws.com/login
+                String postParameters = "username=" + inUsername + "&password=" + inPassword;
+                byte[] postData = postParameters.getBytes(StandardCharsets.UTF_8);
+                int postDataLength = postData.length;
+                try {
+                    URL url = new URL("http://ec2-54-90-187-63.compute-1.amazonaws.com/login");
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setInstanceFollowRedirects(false);
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+                    urlConnection.setRequestProperty( "charset", "utf-8");
+                    urlConnection.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+                    urlConnection.setUseCaches(false);
+                    try(DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream())){
+                        wr.write(postData);
+                    }
+                }
+                catch(IOException e){
+                    throw new RuntimeException(e);
+                }
                 break;
-            case R.id.tvRegisterLink:
+            case R.id.btRegister:
                 startActivity(new Intent(this, Register.class));
                 break;
         }
