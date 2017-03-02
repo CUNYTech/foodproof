@@ -8,36 +8,67 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#008080"
+
     tools:context="edu.cuny.foodproof.Login">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="15dp"-->
+            <!--android:text="Username"-->
+            <!--android:textColor="@android:color/holo_blue_dark"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Password"-->
+            <!--android:textColor="@android:color/holo_blue_dark"/>-->
+        <Button
+            android:id="@+id/btLogin"
+            android:text="Login"
             android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:text="Username"
-            android:textColor="@android:color/holo_blue_dark"/>
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btRegister"
+            android:layout_marginBottom="21dp" />
+
+        <Button
+            android:id="@+id/btRegister"
+            android:text="Register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="163dp" />
+
 
         <EditText
             android:id="@+id/etUsername"
+            android:hint="Username"
+            android:textColorHint="#ffffff"
             android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Password"
-            android:textColor="@android:color/holo_blue_dark"/>
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="23dp" />
 
         <EditText
             android:id="@+id/etPassword"
             android:inputType="textPassword"
+            android:hint="Password"
+            android:textColorHint="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_below="@+id/etUsername"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             />
 
         <Button
@@ -59,5 +90,5 @@
             android:text="_"
             android:textColor="@android:color/holo_blue_dark"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

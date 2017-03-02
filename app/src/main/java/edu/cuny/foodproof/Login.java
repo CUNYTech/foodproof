@@ -39,6 +39,8 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
 
         bLogin.setOnClickListener(this);
         bRegister.setOnClickListener(this);
+        //        etUsername.setBackgroundColor(Color.parseColor("#ffffff"));
+
     }
 
     @Override
