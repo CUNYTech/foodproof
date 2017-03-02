@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
             case R.id.btLogin:
                 String result = "";
                 try {
-                    result = new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/login/username/password").get();
+                    result = new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/login").get();
                 }
                 catch(Exception e){
                     throw new RuntimeException(e);
