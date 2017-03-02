@@ -1,6 +1,7 @@
 package edu.cuny.foodproof;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +12,11 @@ import android.widget.TextView;
 import android.widget.EditText;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -22,11 +25,13 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
 
     Button bLogin, bRegister;
     EditText etUsername, etPassword;
+    TextView tvResults;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        tvResults = (TextView) findViewById(R.id.tvResults);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         bLogin = (Button) findViewById(R.id.btLogin);
@@ -42,26 +47,14 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
         String inPassword = etPassword.getText().toString();
         switch(v.getId()){
             case R.id.btLogin:
-                String postParameters = "username=" + inUsername + "&password=" + inPassword;
-                byte[] postData = postParameters.getBytes(StandardCharsets.UTF_8);
-                int postDataLength = postData.length;
+                String result = "";
                 try {
-                    URL url = new URL("http://ec2-54-90-187-63.compute-1.amazonaws.com/login");
-                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    urlConnection.setDoOutput(true);
-                    urlConnection.setInstanceFollowRedirects(false);
-                    urlConnection.setRequestMethod("POST");
-                    urlConnection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
-                    urlConnection.setRequestProperty( "charset", "utf-8");
-                    urlConnection.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-                    urlConnection.setUseCaches(false);
-                    try(DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream())){
-                        wr.write(postData);
-                    }
+                    result = new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/login/username/password").get();
                 }
-                catch(IOException e){
+                catch(Exception e){
                     throw new RuntimeException(e);
                 }
+                tvResults.setText(result);
                 break;
             case R.id.btRegister:
                 startActivity(new Intent(this, Register.class));
@@ -69,13 +62,23 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
         }
     }
 
-    private class makePostRequest extends AsyncTask<String, Void, String>{
+    private class makePostRequest extends AsyncTask<String, Void, String> {
+        String inUsername;
+        String inPassword;
+        byte[] postData;
+        int postDataLength;
+
+        @Override
+        protected void onPreExecute(){
+            inUsername = etUsername.getText().toString();
+            inPassword = etPassword.getText().toString();
+        }
 
       @Override
-      protected String doInBackground(){
-        String inUsername = etUsername.getText().toString();
-        String inPassword = etPassword.getText().toString();
-        String postParameters = "username=" + inUsername + "&password=" + inPassword;
+      protected String doInBackground(String... params){
+          String postParameters = "username=" + inUsername + "&password=" + inPassword;
+          byte[] postData = postParameters.getBytes(StandardCharsets.UTF_8);
+          int postDataLength = postData.length;
         try {
             URL url = new URL(params[0]);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -92,11 +95,9 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
                 wr.close();
             }
             int responseCode = urlConnection.getResponseCode();
-            BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             final StringBuilder output = new StringBuilder("Request URL " + params[0]);
-            output.append(System.getProperty("line.separator") + "Request Parameters " + urlParameters);
             output.append(System.getProperty("line.separator")  + "Response Code " + responseCode);
-            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line = "";
             StringBuilder responseOutput = new StringBuilder();
             System.out.println("output===============" + br);
@@ -105,7 +106,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
             }
             br.close();
             output.append(System.getProperty("line.separator") + "Response " + System.getProperty("line.separator") + System.getProperty("line.separator") + responseOutput.toString());
-
+            return output.toString();
         }
         catch(IOException e){
             throw new RuntimeException(e);
