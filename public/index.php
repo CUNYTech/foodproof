@@ -93,7 +93,6 @@ $app->post('/login', function ($request, $response,$args) {
     		$response->getBody()->write($out);
 	}
 
-
 	$response = $response->withHeader('Content-Type', 'application/json');
 	db_close($db);
     return $response;
