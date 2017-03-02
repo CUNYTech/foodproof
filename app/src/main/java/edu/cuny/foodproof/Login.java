@@ -49,15 +49,16 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
         String inPassword = etPassword.getText().toString();
         switch(v.getId()){
             case R.id.btLogin:
-                String result = "";
+                String result;
                 try {
-                    result = new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/login").get();
+                    new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/login");
                 }
                 catch(Exception e){
                     throw new RuntimeException(e);
                 }
-                tvResults.setText(result);
-                startActivity(new Intent(this, MainActivity.class));
+                Intent mainIntent = new Intent(this, MainActivity.class);
+                mainIntent.putExtra("succeeded")
+                startActivity(mainIntent);
                 break;
             case R.id.btRegister:
                 startActivity(new Intent(this, Register.class));
@@ -68,6 +69,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
     private class makePostRequest extends AsyncTask<String, Void, String> {
         String inUsername;
         String inPassword;
+        String success;
         byte[] postData;
         int postDataLength;
 
@@ -79,7 +81,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
 
       @Override
       protected String doInBackground(String... params){
-          String postParameters = "username=" + inUsername + "&password=" + inPassword;
+          String postParameters = "user=" + inUsername + "&password=" + inPassword;
           byte[] postData = postParameters.getBytes(StandardCharsets.UTF_8);
           int postDataLength = postData.length;
         try {
@@ -104,23 +106,20 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
             String line = "";
             StringBuilder responseOutput = new StringBuilder();
             System.out.println("output===============" + br);
-            while((line = br.readLine()) != null ) {
-              responseOutput.append(line);
-            }
+            line = br.readLine();
+            responseOutput.append(line);
             br.close();
-            output.append(System.getProperty("line.separator") + "Response " + System.getProperty("line.separator") + System.getProperty("line.separator") + responseOutput.toString());
-            return output.toString();
+            return responseOutput.toString();
         }
         catch(IOException e){
             throw new RuntimeException(e);
         }
       }
 
-      @Override
-      protected void onPostExecute(String result){
-
-      }
-
+        @Override
+        protected void onPostExecute(String result){
+            tvResults.setText(result);
+        }
 
 
     }
