@@ -57,6 +57,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
                     throw new RuntimeException(e);
                 }
                 tvResults.setText(result);
+                startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.btRegister:
                 startActivity(new Intent(this, Register.class));
