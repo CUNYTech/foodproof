@@ -27,9 +27,9 @@ if connection succeeds then it imports query file and registers user to db
 *****************************************************************************
 input: POST "user","email","password" on /register
 output: Content-Type', 'application/json file
-		if succeeds then returns json string
+		if succeeds then returns json string http status 200
 			{"result": "succeed"}
-		is fails then
+		is fails then http status 403
 			{"Error":{the list of error}, "Result": "failed"}
 ///////////////////////////////////////////////////////////////////////////////
 ******************************************************************************/
@@ -77,6 +77,7 @@ $app->post('/register', function ($request, $response,$args) {
 		$error["Result"]="failed";
 		$out= json_encode($error,JSON_FORCE_OBJECT);
 		$response->getBody()->write($out);
+		$response= $response->withStatus(403);
 	}
 	$response = $response->withHeader('Content-Type', 'application/json');
     return $response;
@@ -97,9 +98,9 @@ then it returns token
 *****************************************************************************
 input: POST "user","password" required on /login
 output: Content-Type', 'application/json file
-		if succeeds then returns json string
+		if succeeds then returns json string HTTP status 200
 			{"result": "succeed", "token":token value}
-		is fails then
+		is fails then HTTP status 403
 			{"Error":{the list of error}, "Result": "failed"}
 ///////////////////////////////////////////////////////////////////////////////
 ******************************************************************************/
@@ -156,6 +157,7 @@ $app->post('/login', function ($request, $response,$args) {
 		$error["Result"]="failed";
 		$out= json_encode($error,JSON_FORCE_OBJECT);
 		$response->getBody()->write($out);
+		$response= $response->withStatus(403);
 	}
 	
 	$response = $response->withHeader('Content-Type', 'application/json');
