@@ -20,3 +20,18 @@ CREATE TABLE `sessions` (
   `created_at` datetime,
    KEY `token` (`token`)
 )ENGINE=InnoDB;
+
+CREATE TABLE `ingredient` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `created_at` datetime,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2; 
+alter table `ingredient` add constraint `name` unique (`name`); 
+
+CREATE TABLE `user-ingredient` (
+  `user_id` int(11) NOT NULL,
+  `ingredient_id` int(11)  NOT NULL,
+  `created_at` datetime,
+  PRIMARY KEY (`user_id`,`ingredient_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2; 

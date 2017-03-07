@@ -1,6 +1,4 @@
 <?php
-  require_once('db_credentials.php');
-
   // user query
   function add_user($name, $password, $email,$db, &$error){
       $created_at = date("Y-m-d H:i:s");
