@@ -2,6 +2,8 @@ package edu.cuny.foodproof;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +23,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+import org.json.*;
+
 public class Login extends AppCompatActivity  implements View.OnClickListener{
 
     Button bLogin, bRegister;
@@ -39,26 +43,18 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
 
         bLogin.setOnClickListener(this);
         bRegister.setOnClickListener(this);
-        //        etUsername.setBackgroundColor(Color.parseColor("#ffffff"));
-
     }
 
     @Override
     public void onClick(View v){
-        String inUsername = etUsername.getText().toString();
-        String inPassword = etPassword.getText().toString();
         switch(v.getId()){
             case R.id.btLogin:
-                String result;
                 try {
                     new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/login");
                 }
                 catch(Exception e){
                     throw new RuntimeException(e);
                 }
-                Intent mainIntent = new Intent(this, MainActivity.class);
-                mainIntent.putExtra("loggedIn", "succeeded");
-                startActivity(mainIntent);
                 break;
             case R.id.btRegister:
                 startActivity(new Intent(this, Register.class));
@@ -69,9 +65,6 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
     private class makePostRequest extends AsyncTask<String, Void, String> {
         String inUsername;
         String inPassword;
-        String success;
-        byte[] postData;
-        int postDataLength;
 
         @Override
         protected void onPreExecute(){
@@ -79,6 +72,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
             inPassword = etPassword.getText().toString();
         }
 
+      @RequiresApi(api = Build.VERSION_CODES.KITKAT)
       @Override
       protected String doInBackground(String... params){
           String postParameters = "user=" + inUsername + "&password=" + inPassword;
@@ -100,16 +94,16 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
                 wr.close();
             }
             int responseCode = urlConnection.getResponseCode();
-            final StringBuilder output = new StringBuilder("Request URL " + params[0]);
-            output.append(System.getProperty("line.separator")  + "Response Code " + responseCode);
-            BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line = "";
-            StringBuilder responseOutput = new StringBuilder();
-            System.out.println("output===============" + br);
-            line = br.readLine();
-            responseOutput.append(line);
-            br.close();
-            return responseOutput.toString();
+            if(responseCode == 200) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                String line = br.readLine();
+                return line;
+            }
+            else{
+                BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));
+                String line = br.readLine();
+                return line;
+            }
         }
         catch(IOException e){
             throw new RuntimeException(e);
@@ -118,10 +112,25 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
 
         @Override
         protected void onPostExecute(String result){
-            tvResults.setText(result);
+            try {
+                JSONObject resultJSON = new JSONObject(result);
+                String successJSON = resultJSON.getString("Result");
+                if(successJSON.equals("succeed")){
+                    Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    mainIntent.putExtra("loggedIn", "succeeded");
+                    startActivity(mainIntent);
+                    finish();
+                }
+                else{
+                    Intent loginIntent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(loginIntent);
+                    finish();
+                }
+            }
+            catch(JSONException e){
+                throw new RuntimeException(e);
+            }
         }
-
-
     }
 
 }
