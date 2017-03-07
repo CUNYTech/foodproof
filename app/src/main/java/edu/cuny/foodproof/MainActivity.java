@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +19,22 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(!(mainIntent.getStringExtra("loggedIn").equals("succeeded"))){
             startActivity(new Intent(this, Login.class));
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_recipe:
+                // Manage Recipes was selected
+                return true;
+            case R.id.menu_profile:
+                // Edit Profile was selected
+                return true;
+            case R.id.menu_logout:
+                // Log out was selected
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
