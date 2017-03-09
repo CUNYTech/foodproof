@@ -36,7 +36,7 @@ $app->post('/login', function ($request, $response,$args) {
 	
 	// check if error happened
 	if (sizeof($error)==0){
-        require_once DB;
+
         require_once USER;
 
 		$db=db_connect($error);

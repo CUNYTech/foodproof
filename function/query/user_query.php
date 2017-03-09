@@ -1,5 +1,7 @@
 <?php
 
+// import db if not here
+  require_once DB;
   // user query
   function add_user($name, $password, $email,$db, &$error){
       $created_at = date("Y-m-d H:i:s");
@@ -50,3 +52,18 @@
       $result = db_query($db, $sql,$error);
       return $result;
  }
+
+function get_user_id_by_name($user,$db,&$error){
+    $sql = "SELECT id FROM users ";
+    $sql .= "WHERE name='" . db_escape($db,$user) . "' ";
+    $sql .= "LIMIT 1;";
+      
+    $users_result = db_query($db, $sql, $error);
+    $user = db_fetch_assoc($users_result);
+    
+    if (!$user){
+     $error["error"]["user"]="username doesnot exist";
+     return false;
+    }
+    return $user['id'];
+}

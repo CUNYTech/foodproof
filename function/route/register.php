@@ -33,7 +33,7 @@ $app->post('/register', function ($request, $response,$args) {
 	// if no error continue
 	if(sizeof($error)==0){
 			// connect db
-			require_once DB;
+			//require_once DB;
         	require_once USER;
 			
 			$db=db_connect($error);

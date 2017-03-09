@@ -35,3 +35,15 @@ CREATE TABLE `user-ingredient` (
   `created_at` datetime,
   PRIMARY KEY (`user_id`,`ingredient_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2; 
+
+ALTER TABLE `user-ingredient`
+  ADD CONSTRAINT `user_constraint` 
+  FOREIGN KEY (`user_id`)
+      REFERENCES `users`(`id`)
+          ON DELETE RESTRICT ON UPDATE RESTRICT;
+   
+ALTER TABLE `user-ingredient`
+    ADD CONSTRAINT `ingredient_constraint`
+      FOREIGN KEY (`ingredient_id`) 
+        REFERENCES `ingredient`(`id`)
+            ON DELETE RESTRICT ON UPDATE RESTRICT;
