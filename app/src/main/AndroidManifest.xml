@@ -17,5 +17,6 @@
         </activity>
         <activity android:name=".Login" />
         <activity android:name=".Register" />
+        <activity android:name=".MenuActivity"/>
     </application>
 </manifest>

@@ -5,13 +5,8 @@
     tools:context=
         ".MenuExampleActivity" >
     <item
-        android:id="@+id/menu_recipe"
-        android:orderInCategory="1"
-        app:showAsAction="never"
-        android:title="Manage Recipes"/>
-    <item
         android:id="@+id/menu_profile"
-        android:orderInCategory="2"
+        android:orderInCategory="1"
         app:showAsAction="never"
         android:title="Edit Profile"/>
     <item
