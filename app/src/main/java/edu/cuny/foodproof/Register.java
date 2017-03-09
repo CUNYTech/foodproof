@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -118,7 +119,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     finish();
                 }
                 else{
-                    //TOAST THAT REGISTRATION FAILED
+                    Toast.makeText(getApplicationContext(), "Registration failed", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
