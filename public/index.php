@@ -1,5 +1,4 @@
 <?php
-
 // define path names
 define('ROOT',dirname(dirname(__FILE__)));
 define ('FUN',ROOT.'/function');
@@ -17,26 +16,27 @@ use \Exception ;
 
 require '../vendor/autoload.php';
 
-$configuration = ['settings' => [
-        'displayErrorDetails' => true, 'debug'=>true,],];
+// config files has error handler that converts php errors to json
+$configuration =include_once  FUN.'/config.php';
 
 $c = new \Slim\Container($configuration);
 
 $app = new \Slim\App($c);
 
-function initialize(){
-    require_once  USER;
-    require_once INGREDIENT;
-    require_once USER_INGREDIENT;
+// include our querys
+foreach (glob(QUERY.'/*.php') as $filename)
+{
+    include $filename;
 }
 
-require ROUTE.'/login.php';
-require ROUTE.'/register.php';
-require ROUTE.'/ingredients_add.php';
-require ROUTE.'/ingredients_return.php';
+// include routes 
+foreach (glob(ROUTE.'/*.php') as $filename)
+{
+    include $filename;
+}
 
 // this always last
-require ROUTE.'/any.php';
-//
+include 'any.php';
+
 $app->run();
 

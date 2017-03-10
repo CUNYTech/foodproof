@@ -1,7 +1,7 @@
 <?php
 
 // import db if not here
-  require_once DB;
+  include_once DB;
   // user query
   function add_user($name, $password, $email,$db, &$error){
       $created_at = date("Y-m-d H:i:s");

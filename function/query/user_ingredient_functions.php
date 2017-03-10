@@ -1,5 +1,5 @@
 <?php
-require_once INGREDIENT;
+include_once INGREDIENT;
 
 function add_ingredient($user,$ingredient,$db, &$error){
       // get uid

@@ -2,7 +2,7 @@
 <?php
 
 // if not imported import database and user script
-  require_once DB;
+  include_once DB;
 
 // ingredient query
 function insert_to_ingredient_table($user,$db,&$error){

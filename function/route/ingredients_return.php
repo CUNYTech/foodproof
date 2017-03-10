@@ -6,8 +6,8 @@
 function reads post request on /ingredient/return path 
 then it looks for parameters we need
 if we dont find them then it throws error
-if we do then it imports database file and creates connection in initialize()
-if connection succeeds then it imports query initialize()
+if we do then  creates connection in 
+if connection succeeds then it imports query 
 it checks if user exists, 
 then extracts user id from user table
 then extracts content in user-ingredient table with that user id of ampunt directed in post
@@ -35,8 +35,6 @@ $app->post('/ingredient/return', function($request, $response, $path = null) {
 	// if no error continue
 	if(sizeof($error)==0){
 
-		// init first
-        initialize();
 		$db=db_connect($error);
 
 		if($db){
@@ -50,7 +48,7 @@ $app->post('/ingredient/return', function($request, $response, $path = null) {
 			// if no error respond
 			if(sizeof($error)==0){
 				$list["Result"] = "succeed";
-                $out = json_encode($list);
+                $out = json_encode($list,JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 				$response->getBody()->write($out);
 			}
 			
@@ -61,7 +59,7 @@ $app->post('/ingredient/return', function($request, $response, $path = null) {
 	// check error
 	if (sizeof($error)>0){
 		$error["Result"]="failed";
-		$out= json_encode($error,JSON_FORCE_OBJECT);
+		$out= json_encode($error,JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 		$response->getBody()->write($out);
 		$response= $response->withStatus(403);
 	}

@@ -13,8 +13,8 @@ output: Content-Type', 'application/json file with status 400
 ******************************************************************************/
 $app->any('/[{path:.*}]', function($request, $response, $path = null) {
 	$error["Result"]="failed";
-	$error["Error"]["path"]="invalid";	
-	$out= json_encode($error,JSON_FORCE_OBJECT);
+	$error["Error"]["URL"]="invalid";	
+	$out= json_encode($error,JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 	$response->getBody()->write($out);
 	$response = $response->withHeader('Content-Type', 'application/json');
     return $response->withStatus(400);

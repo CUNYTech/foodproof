@@ -7,9 +7,9 @@
 function reads post request on /login path 
 then it looks for parameters we need
 if we dont find them then it throws error
-if we do then it imports database file and creaes connection in initialize()
-if connection succeeds then it imports query file in initialize()
- and checks if user password combination exists
+if we do then  create connection in 
+if connection succeeds then it  
+  checks if user password combination exists
 
 ********************************************************************************************8
 if it exists then it generates a random token and stores (tokem user) info to db
@@ -36,11 +36,9 @@ $app->post('/login', function ($request, $response,$args) {
 	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
 	if(!isset($data['password'])){$error["Error"]["password"]="not entered";}
 	
-	
 	// check if error happened
 	if (sizeof($error)==0){
 
-        initialize();
 
 		$db=db_connect($error);
 
@@ -61,7 +59,7 @@ $app->post('/login', function ($request, $response,$args) {
 
 				// if no error continue
 				if (sizeof($error)==0){
-					$out= json_encode(["Result" => "succeed", "Token" => $token]);
+					$out= json_encode(["Result" => "succeed", "Token" => $token],JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 					$response->getBody()->write($out);
 				}
 			}
@@ -74,7 +72,7 @@ $app->post('/login', function ($request, $response,$args) {
 	// check if error happened
 	if (sizeof($error)>0){
 		$error["Result"]="failed";
-		$out= json_encode($error,JSON_FORCE_OBJECT);
+		$out= json_encode($error,JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 		$response->getBody()->write($out);
 		$response= $response->withStatus(403);
 	}

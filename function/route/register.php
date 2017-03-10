@@ -6,10 +6,10 @@
 function reads post request on /register path 
 then it looks for parameters we need
 if we dont find them then it throws error
-if we do then it imports database file and creaes connection in initialize()
-if connection succeeds then it imports query file in initialize()
+if we do then  creaes connection in 
+if connection succeeds then it 
 ********************************************************************
-this just adds user to db table, 
+ just adds user to db table, 
 if there is no error it created random token,
 then it adds user_name and token to the sessions db
 
@@ -37,8 +37,6 @@ $app->post('/register', function ($request, $response,$args) {
 	
 	// if no error continue
 	if(sizeof($error)==0){
-			
-			initialize();
 
 			$db=db_connect($error);
 
@@ -65,7 +63,7 @@ $app->post('/register', function ($request, $response,$args) {
 	// check error
 	if (sizeof($error)>0){
 		$error["Result"]="failed";
-		$out= json_encode($error,JSON_FORCE_OBJECT);
+		$out= json_encode($error,JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 		$response->getBody()->write($out);
 		$response= $response->withStatus(403);
 	}

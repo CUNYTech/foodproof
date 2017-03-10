@@ -6,8 +6,8 @@
 function reads post request on /ingredient/add path 
 then it looks for parameters we need
 if we dont find them then it throws error
-if we do then it imports database file and creates connection in initialize()
-if connection succeeds then it imports query initialize()
+if we do then  creates connection in 
+if connection succeeds then it imports query 
 
 *****************************************************************************************
 it checks if username exists by checking if user id for that user exists , 
@@ -38,7 +38,6 @@ $app->post('/ingredient/add', function($request, $response, $path = null) {
 	if(sizeof($error)==0){
 
 		// init first
-        initialize();
 		$db=db_connect($error);
 
 		if($db){
@@ -51,7 +50,7 @@ $app->post('/ingredient/add', function($request, $response, $path = null) {
 			
 			// if no error respond
 			if(sizeof($error)==0){
-				$out= json_encode(["Result" => "succeed"]);
+				$out= json_encode(["Result" => "succeed"],JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 				$response->getBody()->write($out);
 			}
 			
@@ -62,7 +61,7 @@ $app->post('/ingredient/add', function($request, $response, $path = null) {
 	// check error
 	if (sizeof($error)>0){
 		$error["Result"]="failed";
-		$out= json_encode($error,JSON_FORCE_OBJECT);
+		$out= json_encode($error,JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 		$response->getBody()->write($out);
 		$response= $response->withStatus(403);
 	}
