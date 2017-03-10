@@ -6,8 +6,13 @@
 function reads post request on /register path 
 then it looks for parameters we need
 if we dont find them then it throws error
-if we do then it imports database file and creaes connection
-if connection succeeds then it imports query file and registers user to db
+if we do then it imports database file and creaes connection in initialize()
+if connection succeeds then it imports query file in initialize()
+********************************************************************
+this just adds user to db table, 
+if there is no error it created random token,
+then it adds user_name and token to the sessions db
+
 *****************************************************************************
 input: POST "user","email","password" on /register
 output: Content-Type', 'application/json file
@@ -32,10 +37,9 @@ $app->post('/register', function ($request, $response,$args) {
 	
 	// if no error continue
 	if(sizeof($error)==0){
-			// connect db
-			//require_once DB;
-        	require_once USER;
 			
+			initialize();
+
 			$db=db_connect($error);
 
 			if($db){
@@ -57,6 +61,7 @@ $app->post('/register', function ($request, $response,$args) {
 			db_close($db);
 		}
 	}
+
 	// check error
 	if (sizeof($error)>0){
 		$error["Result"]="failed";
@@ -64,6 +69,7 @@ $app->post('/register', function ($request, $response,$args) {
 		$response->getBody()->write($out);
 		$response= $response->withStatus(403);
 	}
+	
 	$response = $response->withHeader('Content-Type', 'application/json');
     return $response;
 });

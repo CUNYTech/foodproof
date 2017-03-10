@@ -1,20 +1,17 @@
 <?php
 /****************************************************************************
-				/ingredient/add
+				/ingredient/return
 //////////////////////////////////////////////////////////////////////////////
 
-function reads post request on /ingredient/add path 
+function reads post request on /ingredient/return path 
 then it looks for parameters we need
 if we dont find them then it throws error
 if we do then it imports database file and creates connection in initialize()
 if connection succeeds then it imports query initialize()
-
-*****************************************************************************************
-it checks if username exists by checking if user id for that user exists , 
-if user_id is returned then add the ingredient to ingredient table
-then extract id of that ingredient from ingredient table
-add user_id and ingredient_if to the user-ingredient table
-
+it checks if user exists, 
+then extracts user id from user table
+then extracts content in user-ingredient table with that user id of ampunt directed in post
+then it retrieves name of each ingredient id we get
 *****************************************************************************
 input: POST "user","count" required on /ingredient/return
 output: Content-Type', 'application/json file
@@ -24,7 +21,8 @@ output: Content-Type', 'application/json file
 			{"Error":{the list of error}, "Result": "failed"}
 ///////////////////////////////////////////////////////////////////////////////
 ******************************************************************************/
-$app->post('/ingredient/add', function($request, $response, $path = null) {
+
+$app->post('/ingredient/return', function($request, $response, $path = null) {
 	$data = $request->getParsedBody();
 
 	// create error array
@@ -32,7 +30,7 @@ $app->post('/ingredient/add', function($request, $response, $path = null) {
 
 	//check if exists
 	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['ingredient'])){$error["Error"]["ingredient"]="not entered";}
+	if(!isset($data['count'])){$error["Count"]["count"]="not entered";}
 	
 	// if no error continue
 	if(sizeof($error)==0){
@@ -44,14 +42,15 @@ $app->post('/ingredient/add', function($request, $response, $path = null) {
 		if($db){
 			// sanitize
 			$user= filter_var($data['user'],FILTER_SANITIZE_STRING);
-			$ingredient = filter_var($data['ingredient'],FILTER_SANITIZE_STRING);
+			$num = filter_var($data['count'],FILTER_SANITIZE_NUMBER_INT);
 			
 			// add user
-			add_ingredient($user,$ingredient,$db,$error);
+			$list['ingredients'] = user_ingredient_list($user,$num,$db,$error);
 			
 			// if no error respond
 			if(sizeof($error)==0){
-				$out= json_encode(["Result" => "succeed"]);
+				$list["Result"] = "succeed";
+                $out = json_encode($list);
 				$response->getBody()->write($out);
 			}
 			

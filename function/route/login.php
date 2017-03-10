@@ -7,8 +7,11 @@
 function reads post request on /login path 
 then it looks for parameters we need
 if we dont find them then it throws error
-if we do then it imports database file and creaes connection
-if connection succeeds then it imports query file and checks if user password combination exists
+if we do then it imports database file and creaes connection in initialize()
+if connection succeeds then it imports query file in initialize()
+ and checks if user password combination exists
+
+********************************************************************************************8
 if it exists then it generates a random token and stores (tokem user) info to db
 then it returns token
 *****************************************************************************
@@ -37,7 +40,7 @@ $app->post('/login', function ($request, $response,$args) {
 	// check if error happened
 	if (sizeof($error)==0){
 
-        require_once USER;
+        initialize();
 
 		$db=db_connect($error);
 

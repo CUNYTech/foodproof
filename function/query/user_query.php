@@ -32,7 +32,7 @@
     $user = db_fetch_assoc($users_result);
     
     if (!$user){
-     $error["error"]["user"]="username and password combination doesnot work";
+     $error["Error"]["User"]="username and password combination doesnot work";
      return false;
     }
     return true;
@@ -62,7 +62,7 @@ function get_user_id_by_name($user,$db,&$error){
     $user = db_fetch_assoc($users_result);
     
     if (!$user){
-     $error["error"]["user"]="username doesnot exist";
+     $error["Error"]["User"]="username doesnot exist";
      return false;
     }
     return $user['id'];
