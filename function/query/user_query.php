@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 // import db if not here
   include_once DB;
@@ -53,7 +54,7 @@
       return $result;
  }
 
-function get_user_id_by_name($user,$db,&$error){
+function get_user_id_by_name(string $user,$db,array &$error): int{
     $sql = "SELECT id FROM users ";
     $sql .= "WHERE name='" . db_escape($db,$user) . "' ";
     $sql .= "LIMIT 1;";
@@ -65,5 +66,20 @@ function get_user_id_by_name($user,$db,&$error){
      $error["Error"]["User"]="username doesnot exist";
      return false;
     }
-    return $user['id'];
+    return (int)($user['id']);
+}
+
+function get_user_name_by_id(int $id,$db,array &$error): string{
+    $sql = "SELECT name FROM users ";
+    $sql .= "WHERE id='" . $id . "' ";
+    $sql .= "LIMIT 1;";
+      
+    $users_result = db_query($db, $sql, $error);
+    $user = db_fetch_assoc($users_result);
+    
+    if (!$user){
+     $error["Error"]["User"]="username doesnot exist";
+     return false;
+    }
+    return $user['name'];
 }

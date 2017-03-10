@@ -1,11 +1,11 @@
-
 <?php
+declare(strict_types=1);
 
 // if not imported import database and user script
   include_once DB;
 
 // ingredient query
-function insert_to_ingredient_table($user,$db,&$error){
+function insert_to_ingredient_table(string $user,$db,array &$error): bool{
       $created_at = date("Y-m-d H:i:s");
       $sql = "INSERT INTO ingredient";
       $sql .= "(name,created_at) ";
@@ -21,14 +21,14 @@ function insert_to_ingredient_table($user,$db,&$error){
       else{return true;}
 }
 
-function insert_to_user_ingredient($uid,$ingredient_id,$db,&$error){
+function insert_to_user_ingredient(int $uid,int $ingredient_id,$db,array &$error): bool{
     
       $created_at = date("Y-m-d H:i:s");
       $sql = "INSERT INTO `user-ingredient`";
       $sql .= "(user_id,ingredient_id,created_at) ";
       $sql .= "VALUES (";
-      $sql .= "'" . db_escape($db, $uid) . "',";
-      $sql .= "'" . db_escape($db, $ingredient_id) . "',";
+      $sql .= "'" . $uid . "',";
+      $sql .= "'" . $ingredient_id . "',";
       $sql .= "'" . $created_at . "'";
       $sql .= ");";
 
@@ -40,7 +40,7 @@ function insert_to_user_ingredient($uid,$ingredient_id,$db,&$error){
 }
 
 //
-  function get_ingredient_name_by_id($ingredient_id,$db,&$error){
+  function get_ingredient_name_by_id(int $ingredient_id,$db,array &$error): string{
       $sql = "SELECT name FROM ingredient ";
       $sql .= "WHERE id='" . $ingredient_id . "' ";
       $sql .= "LIMIT 1;";
@@ -56,7 +56,7 @@ function insert_to_user_ingredient($uid,$ingredient_id,$db,&$error){
   }
 
 //
-  function get_ingredient_id_by_user_id($uid,$num,$db,&$error){
+  function get_ingredient_id_by_user_id(int $uid,int $num,$db,array &$error){
     $sql = "SELECT `ingredient_id` FROM `user-ingredient` ";
     $sql .= "WHERE `user_id`=" .$uid;
     $sql .= " LIMIT ". $num ." ;";

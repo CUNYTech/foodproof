@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
+
   include_once('db_credentials.php');
 
-  function db_connect(&$error) {
+  function db_connect(array &$error) {
       $connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
       if(mysqli_connect_errno()) {
         $msg = "Database connection failed: ";
@@ -13,7 +15,7 @@
       return $connection;
   }
 
-  function db_query($connection, $sql, &$error) {
+  function db_query($connection, string $sql,array &$error) {
     	$result_set = mysqli_query($connection, $sql);
       if($result_set==false){
         $error['SQL error']=mysqli_error($connection);
@@ -27,7 +29,7 @@
       return $result_set;
   }
 
-function confirm_query($result_set,&$error) {
+function confirm_query($result_set,array &$error) {
     if(!$result_set) {
       $error["error"]["DB"]="Database query failed";
     }
