@@ -48,7 +48,7 @@ $app->post('/ingredient/return', function($request, $response, $path = null) {
 			// if no error respond
 			if(sizeof($error)==0){
 				$list["Result"] = "succeed";
-                $out = json_encode($list,JSON_PRETTY_PRINT);
+                $out = json_encode($list,JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 				$response->getBody()->write($out);
 			}
 			
