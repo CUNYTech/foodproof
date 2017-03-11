@@ -1,4 +1,5 @@
 vendor/*
-function/db_credentials.php
+server/function/db_credentials.php
 curl.txt
+err.html
 logs/*
