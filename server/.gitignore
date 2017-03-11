@@ -1,4 +1,4 @@
 vendor/*
-server/function/db_credentials.php
+function/db_credentials.php
 curl.txt
 err.html
