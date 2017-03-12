@@ -29,6 +29,7 @@ $app->post('/ingredient/add', function($request, $response, $path = null) {
 
 	// create error array
 	$error=[];
+	$out=[];
 
 	//check if exists
 	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
@@ -46,11 +47,33 @@ $app->post('/ingredient/add', function($request, $response, $path = null) {
 			$ingredient = filter_var($data['ingredient'],FILTER_SANITIZE_STRING);
 			
 			// add user
-			add_ingredient($user,$ingredient,$db,$error);
-			
+			$ingredient_id = add_ingredient($user,$ingredient,$db,$error);
+
+			// if image is sent upload and store image file name
+			if(isset($_FILES['image'])) {
+
+				// upload file
+				$image_data=image_upload('image',$error);
+
+				// save records to db
+				if($image_data){
+					// no error in this one, continue just display if image not loaded
+					add_image_data($image_data,$ingredient_id,$db,$out);
+					if(sizeof($out)==0){
+						$out['Upload']='succeed';
+					}
+				}
+				else{
+					$out['Upload']='failed';
+				}
+			}
+			else {
+				$out['Upload']='No file submitted';
+			}
 			// if no error respond
 			if(sizeof($error)==0){
-				$out= json_encode(["Result" => "succeed"],JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
+				$out['Result']='succeed';
+				$out= json_encode($out,JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 				$response->getBody()->write($out);
 			}
 			

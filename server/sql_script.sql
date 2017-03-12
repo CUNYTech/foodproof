@@ -1,6 +1,5 @@
 use foodproof_users;
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -13,7 +12,6 @@ CREATE TABLE `users` (
 alter table `users` add constraint `name` unique (`name`); 
 alter table `users` add constraint `email` unique (`email`); 
 
-DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
   `user` varchar(255) DEFAULT NULL,
   `token` varchar(255) DEFAULT NULL,
@@ -34,7 +32,7 @@ CREATE TABLE `user-ingredient` (
   `ingredient_id` int(11)  NOT NULL,
   `created_at` datetime,
   PRIMARY KEY (`user_id`,`ingredient_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2; 
+) ENGINE=InnoDB;
 
 ALTER TABLE `user-ingredient`
   ADD CONSTRAINT `user_constraint` 
@@ -46,4 +44,33 @@ ALTER TABLE `user-ingredient`
     ADD CONSTRAINT `ingredient_constraint`
       FOREIGN KEY (`ingredient_id`) 
         REFERENCES `ingredient`(`id`)
+            ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE `images`(
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name`varchar(255) DEFAULT NULL,
+    `extension` varchar(5) DEFAULT NULL,
+    `size` int(11) default 0,
+    `md5` VARCHAR(32) NOT NULL,
+    `created_at` datetime,
+    PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=2; 
+
+CREATE TABLE `ingredient-images` (
+   `ingredient_id` int(11),
+  `image_id` int(11),
+  `created_at` datetime,
+  PRIMARY KEY (`ingredient_id`,`image_id`)
+) ;
+
+ALTER TABLE `ingredient-images`
+  ADD CONSTRAINT `ingredient_image_constraint` 
+  FOREIGN KEY (`ingredient_id`)
+      REFERENCES `ingredient`(`id`)
+          ON DELETE RESTRICT ON UPDATE RESTRICT;
+   
+ALTER TABLE `ingredient-images`
+    ADD CONSTRAINT `image_constraint`
+      FOREIGN KEY (`image_id`) 
+        REFERENCES `images`(`id`)
             ON DELETE RESTRICT ON UPDATE RESTRICT;

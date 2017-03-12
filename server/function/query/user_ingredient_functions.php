@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include_once INGREDIENT;
 
-function add_ingredient($user,$ingredient,$db, &$error):bool{
+function add_ingredient($user,$ingredient,$db, &$error){
       // get uid
       $user_id=get_user_id_by_name($user,$db,$error);
       if(sizeof($error)!=0) return false;
@@ -18,7 +18,7 @@ function add_ingredient($user,$ingredient,$db, &$error):bool{
       //insert to user-ingretdient tuple table
       insert_to_user_ingredient($user_id,$ingredient_id,$db,$error);      
       if(sizeof($error)!=0) return false;
-      return true;
+      return $ingredient_id;
   }
 
 
