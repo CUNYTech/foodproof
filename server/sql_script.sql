@@ -37,14 +37,12 @@ CREATE TABLE `user-ingredient` (
 ALTER TABLE `user-ingredient`
   ADD CONSTRAINT `user_constraint` 
   FOREIGN KEY (`user_id`)
-      REFERENCES `users`(`id`)
-          ON DELETE RESTRICT ON UPDATE RESTRICT;
-   
+      REFERENCES `users`(`id`);
+
 ALTER TABLE `user-ingredient`
     ADD CONSTRAINT `ingredient_constraint`
       FOREIGN KEY (`ingredient_id`) 
-        REFERENCES `ingredient`(`id`)
-            ON DELETE RESTRICT ON UPDATE RESTRICT;
+        REFERENCES `ingredient`(`id`);
 
 CREATE TABLE `images`(
     `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -60,17 +58,16 @@ CREATE TABLE `ingredient-images` (
    `ingredient_id` int(11),
   `image_id` int(11),
   `created_at` datetime,
-  PRIMARY KEY (`ingredient_id`,`image_id`)
+  PRIMARY KEY (`ingredient_id`,`imaexit
+  ge_id`)
 ) ;
 
 ALTER TABLE `ingredient-images`
   ADD CONSTRAINT `ingredient_image_constraint` 
   FOREIGN KEY (`ingredient_id`)
-      REFERENCES `ingredient`(`id`)
-          ON DELETE RESTRICT ON UPDATE RESTRICT;
-   
+      REFERENCES `ingredient`(`id`);
+
 ALTER TABLE `ingredient-images`
     ADD CONSTRAINT `image_constraint`
       FOREIGN KEY (`image_id`) 
-        REFERENCES `images`(`id`)
-            ON DELETE RESTRICT ON UPDATE RESTRICT;
+        REFERENCES `images`(`id`);
