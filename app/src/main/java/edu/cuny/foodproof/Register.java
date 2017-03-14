@@ -77,6 +77,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             byte[] postData = postParameters.getBytes(StandardCharsets.UTF_8);
             int postDataLength = postData.length;
             try {
+
+                String response = "";
+
                 URL url = new URL(params[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setDoOutput(true);
@@ -94,13 +97,23 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 int responseCode = urlConnection.getResponseCode();
                 if(responseCode == 200) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    String line = br.readLine();
-                    return line;
+                    String line;
+
+                    while((line=br.readLine()) != null){
+                        response += line;
+                    }
+
+                    return response;
                 }
                 else{
                     BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));
-                    String line = br.readLine();
-                    return line;
+                    String line;
+
+                    while((line=br.readLine()) != null){
+                        response += line;
+                    }
+
+                    return response;
                 }
             }
             catch(IOException e){

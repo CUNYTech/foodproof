@@ -51,6 +51,11 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
         bRegister.setOnClickListener(this);
     }
 
+    @Override
+    public void onBackPressed(){
+        //Prevents back press from returning to logged in activity
+    }
+
     //Method gets called whenever a button with an OnClickListener is clicked
     @Override
     public void onClick(View v){
@@ -106,6 +111,8 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
 
             try {
 
+                String response = "";
+
                 //Creating a URL out of the string that is passed into the AsyncTask
                 URL url = new URL(params[0]);
 
@@ -134,10 +141,14 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
 
                     //Reading the response string from the server
                     BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    String line = br.readLine();
+                    String line;
+
+                    while((line=br.readLine()) != null){
+                        response += line;
+                    }
 
                     //Returning the response
-                    return line;
+                    return response;
                 }
 
                 //Otherwise an error occurred
@@ -145,10 +156,14 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
 
                     //Reading the error response string from the server
                     BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));
-                    String line = br.readLine();
+                    String line;
+
+                    while((line=br.readLine()) != null){
+                        response += line;
+                    }
 
                     //Returning the error response
-                    return line;
+                    return response;
                 }
             }
             catch(IOException e){

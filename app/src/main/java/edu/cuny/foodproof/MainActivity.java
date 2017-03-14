@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_logout:
                 // Log out was selected
+                Intent logOutIntent = new Intent(this, MainActivity.class);
+                startActivity(logOutIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
