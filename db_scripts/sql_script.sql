@@ -1,3 +1,4 @@
+
 use foodproof_users;
 
 CREATE TABLE `users` (
@@ -58,8 +59,7 @@ CREATE TABLE `ingredient-images` (
    `ingredient_id` int(11),
   `image_id` int(11),
   `created_at` datetime,
-  PRIMARY KEY (`ingredient_id`,`imaexit
-  ge_id`)
+  PRIMARY KEY (`ingredient_id`,`image_id`)
 ) ;
 
 ALTER TABLE `ingredient-images`
