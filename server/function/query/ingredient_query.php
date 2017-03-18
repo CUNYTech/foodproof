@@ -56,6 +56,22 @@ function insert_to_user_ingredient(int $uid,int $ingredient_id,$db,array &$error
   }
 
 //
+  function get_ingredient_id_by_name(string $ingredient,$db,array &$error){
+      $sql = "SELECT id FROM ingredient ";
+      $sql .= "WHERE name='" . db_escape($db,$ingredient) . "' ";
+      $sql .= "LIMIT 1;";
+            
+      $ingredient_result = db_query($db, $sql, $error);
+      $ingredient = db_fetch_assoc($ingredient_result);
+      
+      if (!$ingredient){
+      $error["Error"]["Ingredient"]="Ingredient doesnot exist";
+      return false;
+      }
+      return (int)$ingredient['id'];
+  }
+
+//
   function get_ingredient_id_by_user_id(int $uid,int $num,$db,array &$error){
     $sql = "SELECT `ingredient_id` FROM `user-ingredient` ";
     $sql .= "WHERE `user_id`=" .$uid;

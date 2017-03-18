@@ -2,6 +2,7 @@
 // define path names
 define('ROOT',dirname(dirname(__FILE__)));
 define ('FUN',ROOT.'/function');
+define ('IMAGE',ROOT.'/image');
 define('ROUTE',FUN.'/route');
 define('DB',FUN.'/database.php');
 define('QUERY',FUN.'/query');

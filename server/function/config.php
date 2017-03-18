@@ -1,6 +1,7 @@
 <?php
 
 function error_to_json($error){
+    $out['Result']='failed';
     $out['error']['message']=$error->getMessage();
     $out['error']['file']=$error->getFile();
     $out['error']['line']=$error->getLine();

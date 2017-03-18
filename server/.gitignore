@@ -3,3 +3,4 @@ function/db_credentials.php
 curl.txt
 err.html
 logs/*
+image/*
