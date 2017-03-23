@@ -2,11 +2,11 @@ version: '2'
 services:
  
   cuny-code:
-    build: .
+    build: ./docker
     volumes:
       - ./server:/var/www/html
     ports:
-      - "8888:80"
+      - "8000:80"
     depends_on:
       - db
       
@@ -26,5 +26,5 @@ services:
       MYSQL_DATABASE: foodproof_users
       MYSQL_ROOT_HOST: 172.17.0.1
     volumes:
-        - ./db_scripts:/docker-entrypoint-initdb.d
+        - ./docker/db_scripts:/docker-entrypoint-initdb.d
   

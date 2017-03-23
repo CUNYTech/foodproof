@@ -48,8 +48,6 @@ declare(strict_types=1);
       $sql .= "'" . db_escape($db, $token). "',";
       $sql .= "'" . $created_at . "'";
       $sql .= ");";
-      //echo $sql;
-      // For INSERT statements, $result is just true/false
       $result = db_query($db, $sql,$error);
       return $result;
  }
@@ -60,11 +58,13 @@ function get_user_id_by_name(string $user,$db,array &$error): int{
     $sql .= "LIMIT 1;";
       
     $users_result = db_query($db, $sql, $error);
+    if(sizeof($error)!=0) return -1;
+
     $user = db_fetch_assoc($users_result);
     
     if (!$user){
      $error["Error"]["User"]="username doesnot exist";
-     return false;
+     return -1;
     }
     return (int)($user['id']);
 }
@@ -79,7 +79,7 @@ function get_user_name_by_id(int $id,$db,array &$error): string{
     
     if (!$user){
      $error["Error"]["User"]="username doesnot exist";
-     return false;
+     return "";
     }
     return $user['name'];
 }
