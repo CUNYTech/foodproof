@@ -1,8 +1,11 @@
 package edu.cuny.foodproof;
 
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +34,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
     Button bLogin, bRegister;
     EditText etUsername, etPassword;
     TextView tvResults;
+    String Username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,11 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
     //Method gets called whenever a button with an OnClickListener is clicked
     @Override
     public void onClick(View v){
+        Username = etUsername.getText().toString();
+        SharedPreferences pref = getSharedPreferences("MyPref",MODE_APPEND);
+        Editor editor = pref.edit();
+        editor.putString("username", Username);
+        editor.commit();
 
         //Switch statement used to check what view is the one being clicked
         switch(v.getId()){
