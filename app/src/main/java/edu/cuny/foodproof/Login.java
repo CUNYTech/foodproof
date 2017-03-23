@@ -193,6 +193,11 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
                 //Case where the 'Result' attribute is 'success'
                 if(successJSON.equals("succeed")){
 
+                    SharedPreferences mPrefs = getSharedPreferences("userInfo", 0);
+                    SharedPreferences.Editor editor = mPrefs.edit();
+                    editor.putString("username", inUsername);
+                    editor.apply();
+
                     //Creating an Intent to start the MainActivity, and inputting the extra that allows the user to stay logged in.
                     Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
                     mainIntent.putExtra("loggedIn", "succeeded");

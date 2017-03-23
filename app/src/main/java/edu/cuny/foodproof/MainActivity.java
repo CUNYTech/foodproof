@@ -21,27 +21,39 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, Login.class));
         }
     }
+
     public void buttonClick(View v)
     {
         Intent intent = new Intent(MainActivity.this, MenuActivity.class);
         startActivity(intent);
     }
+
+    public void searchClick(View v){
+        Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
+        startActivity(searchIntent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_profile:
                 // Edit Profile was selected
+                Intent profileIntent = new Intent(this, Profile.class);
+                startActivity(profileIntent);
                 return true;
+
             case R.id.menu_logout:
                 // Log out was selected
                 Intent logOutIntent = new Intent(this, MainActivity.class);
                 startActivity(logOutIntent);
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
