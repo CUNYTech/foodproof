@@ -8,13 +8,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#008080"
+    android:background="#FFFFF0"
 
     tools:context="edu.cuny.foodproof.Login">
 
+
+
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -31,6 +33,17 @@
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Password"-->
             <!--android:textColor="@android:color/holo_blue_dark"/>-->
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pizza_main"
+            android:scaleType="centerCrop"
+            ></ImageView>
+
+
+            />
+
 
         <EditText
             android:id="@+id/etUsername"
