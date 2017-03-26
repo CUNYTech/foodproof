@@ -1,22 +1,14 @@
 package edu.cuny.foodproof;
 
-
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.app.Activity;
 import android.support.annotation.RequiresApi;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,59 +19,44 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
-public class MenuActivity extends Activity implements View.OnClickListener{
-    private Button fridgeButton;
-    private EditText edit;
-    private ListView lv;
-    ArrayList<String> ar = new ArrayList<String>();
-    ArrayAdapter<String> adapter;
-    //private static final String Username = "user";
-    private SharedPreferences sharedPreferences;
+public class Profile extends AppCompatActivity {
+    TextView tvUsername;
+    TextView tvIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
-        fridgeButton = (Button)findViewById(R.id.button5);
-        lv = (ListView) findViewById(R.id.list);
-        fridgeButton.setOnClickListener(this);
-        edit = (EditText)findViewById(R.id.ingredient);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, ar);
-        lv.setAdapter(adapter);
+        setContentView(R.layout.activity_profile);
 
-    }
-    public void onClick(View view) {
+        tvUsername = (TextView) findViewById(R.id.tvUsername);
+
+        tvIngredients = (TextView) findViewById(R.id.tvIngredients);
+
+
         try {
-            new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/ingredient/add").toString();
+            new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/ingredient/return");
         }
         catch(Exception e){
             throw new RuntimeException(e);
         }
 
     }
+
     private class makePostRequest extends AsyncTask<String, Void, String> {
-        String inUsername;
-        String inIngredient;
-        String input;
+        String username;
 
         @Override
         protected void onPreExecute(){
-            input = edit.getText().toString();
-            if (input.length() > 0) {
-                adapter.add(input);
-                edit.setText("");
-            }
-            sharedPreferences = getSharedPreferences("MyPref", MODE_APPEND);
-            inUsername = sharedPreferences.getString("username", null);
-            inIngredient = input;
+            SharedPreferences mPrefs = getSharedPreferences("userInfo", 0);
+            username = mPrefs.getString("username", "");
+            tvUsername.setText(username);
         }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         protected String doInBackground(String... params){
-            String postParameters = "user=" + inUsername + "&ingredient=" + input;
+            String postParameters = "user=" + username + "&count=20";
             byte[] postData = postParameters.getBytes(StandardCharsets.UTF_8);
             int postDataLength = postData.length;
             try {
@@ -130,18 +107,24 @@ public class MenuActivity extends Activity implements View.OnClickListener{
         @Override
         protected void onPostExecute(String result){
             try {
-                JSONObject resultJSON = new JSONObject(result);
-                String successJSON = resultJSON.getString("Result");
-                if(successJSON.equals("succeed")){
-                    Toast.makeText(getApplicationContext(), input + " was added successfully", Toast.LENGTH_SHORT).show();
+
+                JSONObject fullResult = new JSONObject(result);
+                JSONArray resultArray = fullResult.getJSONArray("ingredients");
+                String ingredients = "";
+                String line;
+
+                for(int i = 0; i < resultArray.length(); i++){
+                    line = resultArray.getString(i);
+                    ingredients += line + ", ";
                 }
-                else{
-                    Toast.makeText(getApplicationContext(), "Failed to add", Toast.LENGTH_SHORT).show();
-                }
+
+                tvIngredients.setText(ingredients);
+
             }
             catch(JSONException e){
                 throw new RuntimeException(e);
             }
         }
     }
+
 }
