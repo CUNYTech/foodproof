@@ -8,17 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#FFCC000"
+    android:background="#008080"
     tools:context="edu.cuny.foodproof.Register">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/table_cloth"
-        android:scaleType="center"
-        android:layout_alignParentBottom="true"
-
-    ></ImageView>
 
     <LinearLayout
         android:layout_width="match_parent"
