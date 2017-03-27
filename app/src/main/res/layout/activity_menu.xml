@@ -3,6 +3,18 @@
     package="edu.cuny.foodproof"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="390dp"
+        android:src="@drawable/fridge"
+        android:scaleType="fitEnd"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        />
+
+
     <Button
         android:id="@+id/button5"
         android:layout_width="200dp"
