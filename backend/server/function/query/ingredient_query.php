@@ -21,25 +21,6 @@ function insert_to_ingredient_table(string $user,$db,array &$error): bool{
       else{return true;}
 }
 
-function insert_to_user_ingredient(int $uid,int $ingredient_id,$db,array &$error): bool{
-    
-      $created_at = date("Y-m-d H:i:s");
-      $sql = "INSERT INTO `user-ingredient`";
-      $sql .= "(user_id,ingredient_id,created_at) ";
-      $sql .= "VALUES (";
-      $sql .= "'" . $uid . "',";
-      $sql .= "'" . $ingredient_id . "',";
-      $sql .= "'" . $created_at . "'";
-      $sql .= ");";
-
-      // For INSERT statements, $result is just true/false
-      $result = db_query($db, $sql, $error);
-      
-      if(!$result){return false;}
-      else{return true;}
-}
-
-//
   function get_ingredient_name_by_id(int $ingredient_id,$db,array &$error): string{
       $sql = "SELECT name FROM ingredient ";
       $sql .= "WHERE id='" . $ingredient_id . "' ";

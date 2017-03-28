@@ -50,3 +50,5 @@ function add_ingredient($user,$ingredient,$db, &$error): int{
 
       return $ingredient_list;
   }
+
+

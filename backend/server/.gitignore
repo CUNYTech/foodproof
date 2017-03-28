@@ -4,3 +4,5 @@ curl.txt
 err.html
 logs/*
 image/*
+*;
+public/cunycode.sublime-workspace

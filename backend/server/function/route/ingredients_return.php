@@ -30,7 +30,7 @@ $app->post('/ingredient/return', function($request, $response, $path = null) {
 
 	//check if exists
 	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['count'])){$error["Count"]["count"]="not entered";}
+	if(!isset($data['count'])){$error["Error"]["count"]="not entered";}
 	
 	// if no error continue
 	if(sizeof($error)==0){
