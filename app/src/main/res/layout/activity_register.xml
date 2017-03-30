@@ -28,15 +28,25 @@
             <!--android:text="Email"-->
             <!--/>-->
 
+
+
+
         <EditText
             android:id="@+id/etEmail"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:hint="Email"
             android:textColorHint="#637a91"
             android:background="@drawable/rect_text_edit"
             android:layout_marginBottom="10dp"
+
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+
+            android:layout_marginTop="80dp"
+
+
             />
 
         <!--<TextView-->
@@ -46,13 +56,16 @@
 
         <EditText
             android:id="@+id/etName"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:hint="Username"
             android:textColorHint="#637a91"
             android:background="@drawable/rect_text_edit"
             android:layout_marginBottom="10dp"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+
             />
 
         <!--<TextView-->
@@ -63,22 +76,33 @@
 
         <EditText
             android:id="@+id/etPassword"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:inputType="textPassword"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:hint="Password"
             android:textColorHint="#637a91"
             android:background="@drawable/rect_text_edit"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+
+
             />
 
 
         <Button
             android:id="@+id/btRegister"
             android:text="Sign up"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="100dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+
+
+            android:layout_height="wrap_content"
+
+
+            />
 
     </LinearLayout>
 
