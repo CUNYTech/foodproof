@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 include_once INGREDIENT;
-
 function add_ingredient($user,$ingredient,$db, &$error): int{
       // get uid
       $user_id=get_user_id_by_name($user,$db,$error);
@@ -31,24 +30,15 @@ function add_ingredient($user,$ingredient,$db, &$error): int{
       return $ingredient_id;
   }
 
+function get_ingredient_id_by_user_id(int $uid, int $num, $db, array&$error) {
+  $sql = "SELECT `ingredient_id` FROM `user-ingredient` ";
+  $sql .= "WHERE `user_id`=".$uid;
+  $sql .= " LIMIT ".$num." ;";
 
- function user_ingredient_list(string $user,int $num,$db,&$error): array{
-      // get uid
-      $user_id=get_user_id_by_name($user,$db,$error);
-      if(sizeof($error)!=0) return NULL;
+  $users_result = db_query($db, $sql, $error);
 
-      // get list of ingredient uid
-      $ingredient_list=[];
-      $ingredient_result = get_ingredient_id_by_user_id($user_id,$num,$db,$error);
-      if(sizeof($error)!=0) return NULL;
+  return $users_result;
+}
 
-      while($ingredient=db_fetch_assoc($ingredient_result) ){
-          $ingredient_list[] = get_ingredient_name_by_id((int)$ingredient['ingredient_id'],$db,$error);
-          if(sizeof($error)!=0) return NULL;
-
-      }
-
-      return $ingredient_list;
-  }
-
+?>
 

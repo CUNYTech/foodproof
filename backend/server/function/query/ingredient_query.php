@@ -52,15 +52,4 @@ function insert_to_ingredient_table(string $user,$db,array &$error): bool{
       return (int)$ingredient['id'];
   }
 
-//
-  function get_ingredient_id_by_user_id(int $uid,int $num,$db,array &$error){
-    $sql = "SELECT `ingredient_id` FROM `user-ingredient` ";
-    $sql .= "WHERE `user_id`=" .$uid;
-    $sql .= " LIMIT ". $num ." ;";
-    $users_result = db_query($db, $sql, $error);
-    
-    return $users_result;
-}
- 
-
 ?>

@@ -31,4 +31,24 @@ function delete_from_user_ingredient(int $uid, int $iid, $db, array &$error): bo
 
 }
 
+
+ function user_ingredient_list(string $user,int $num,$db,&$error): array{
+      $sql = "SELECT `ingredient`.name from `users` join `user-ingredient` on `users`.id=`user-ingredient`.user_id join ingredient on `user-ingredient`.ingredient_id=`ingredient`.id ";
+      $sql .= "where `users`.name='" . $user ."'";
+
+      $ingredient_list = [];
+      $result = db_query($db, $sql, $error);
+
+      if(sizeof($error)==0){
+            while($ingredient = db_fetch_assoc($result)){
+                  $ingredient_list[]=$ingredient['name'];
+            }
+
+            return $ingredient_list;
+      }
+      else{
+            return null;
+      }
+  }
+
 ?>
