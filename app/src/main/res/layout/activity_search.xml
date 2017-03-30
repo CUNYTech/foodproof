@@ -11,10 +11,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.cuny.foodproof.SearchActivity"
-    android:background="@drawable/search1"
+    android:background="@drawable/search2"
 
 
     >
+
 
 
 
@@ -50,7 +51,10 @@
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:textAlignment="center"
-        android:text=""/>
+        android:text=""
+        android:background="@null"
+        />
+
 
 
 </LinearLayout>

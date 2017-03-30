@@ -21,7 +21,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/pepper_slice"
+            android:src="@drawable/pepper_slice3"
             android:scaleType="center"
             android:layout_alignParentLeft="true"
             />
@@ -49,6 +49,9 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="23dp"
             android:background="@drawable/rect_text_edit"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+
             />
 
         <EditText
@@ -63,6 +66,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:background="@drawable/rect_text_edit"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
 
             />
 
@@ -78,14 +83,20 @@
             android:text="Register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            />
 
         <Button
             android:id="@+id/btLogin"
             android:text="Login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btRegister" />
+            android:layout_above="@+id/btRegister"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            />
 
 
     </RelativeLayout>
