@@ -13,17 +13,6 @@
     tools:context="edu.cuny.foodproof.Profile">
 
     <TextView
-        android:id="@+id/about_you"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20sp"
-        android:textSize="20sp"
-        android:textAlignment="gravity"
-        android:text="About You:"/>
-
-
-
-    <TextView
         android:id="@+id/tvUsername"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -31,6 +20,11 @@
         android:textSize="40sp"
         android:textAlignment="center"
         android:text=""/>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tvIngredients"
