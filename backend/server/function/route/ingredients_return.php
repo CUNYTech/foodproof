@@ -10,7 +10,7 @@ if we do then  creates connection in
 if connection succeeds then it imports query 
 it checks if user exists, 
 then extracts user id from user table
-then extracts content in user-ingredient table with that user id of ampunt directed in post
+then extracts content in user_ingredient table with that user id of ampunt directed in post
 then it retrieves name of each ingredient id we get
 *****************************************************************************
 input: POST "user","count" required on /ingredient/return

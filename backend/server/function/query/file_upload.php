@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-function image_upload(string $name, array &$error){
-    $storage = new \Upload\Storage\FileSystem(IMAGE);
+function image_upload(string $name, string $folder, array &$error){
+    $storage = new \Upload\Storage\FileSystem($folder);
     $file = new \Upload\File($name,$storage);
 
     //rename the file on upload
@@ -38,10 +38,18 @@ function image_upload(string $name, array &$error){
     }  
 }
 
-function add_image_data(array $data,int $ingredient_id, $db,$error){
+function add_ingredient_image_data(array $data,int $ingredient_id, $db,&$error){
     if(insert_to_images_table($data,$db,$error)){
         $image_id = db_insert_id($db);
         insert_to_ingredient_images_table($ingredient_id,$image_id,$db,$error);
+        //echo json_encode($error);
+    }
+}
+
+function add_user_profile_picture_data(array $data,int $user_id, $db,&$error){
+    if(insert_to_profile_picture_table($data,$db,$error)){
+        $image_id = db_insert_id($db);
+        insert_to_user_profile_pictures_table($user_id,$image_id,$db,$error);
         //echo json_encode($error);
     }
 }

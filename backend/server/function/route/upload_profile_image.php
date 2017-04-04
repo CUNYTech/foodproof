@@ -1,33 +1,32 @@
 <?php
-$app->post('/upload', function($request, $response, $path = null) {
+$app->post('/profile_picture', function($request, $response, $path = null) {
 	// if image is sent upload and store image file name
     $error=[];
     $out=[];
     
     $data = $request->getParsedBody();
-    if(!isset($data['ingredient'])){$error["Error"]["ingredient"]="not entered";}
+    if(!isset($data['user'])){$error["Error"]["User"]="not entered";}
    
     if(sizeof($error)==0){
         if(isset($_FILES['image'])) {
-            $image_data=image_upload('image',$error);
-
+            $image_data=image_upload('image',PROFILE_PICTURE, $error);
             if($image_data){
-               
                 $db=db_connect($error);
                 if($db){
                     // upload file
-                    $ingredient = filter_var($data['ingredient'],FILTER_SANITIZE_STRING);
-                    $ingredient_id=get_ingredient_id_by_name($ingredient,$db,$error);
+                    $user = filter_var($data['user'],FILTER_SANITIZE_STRING);
+                    $user_id=get_user_id_by_name($user,$db,$error);
                     
                     if(sizeof($error)==0){
-                        add_image_data($image_data,$ingredient_id,$db,$out);
-                        if(sizeof($out)==0){
+                        add_user_profile_picture_data($image_data,$user_id,$db,$error);
+                        if(sizeof($error)==0){
                             $out['Upload']='succeed';
                         }
                         else{
-                            $out['Upload']='failed';
+                            $error['Upload']='failed';
+                            unlink(PROFILE_PICTURE.'/'.$image_data['name']);
                         }
-                        }
+                    }
                     
                   // close connection
                     db_close($db);

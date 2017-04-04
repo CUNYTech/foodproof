@@ -3,6 +3,6 @@ function/db_credentials.php
 curl.txt
 err.html
 logs/*
-image/*
+*.jpg
 *;
 public/cunycode.sublime-workspace

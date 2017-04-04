@@ -4,7 +4,7 @@ declare(strict_types=1);
 function insert_to_user_ingredient(int $uid,int $ingredient_id,$db,array &$error): bool{
     
       $created_at = date("Y-m-d H:i:s");
-      $sql = "INSERT INTO `user-ingredient`";
+      $sql = "INSERT INTO `user_ingredient`";
       $sql .= "(user_id,ingredient_id,created_at) ";
       $sql .= "VALUES (";
       $sql .= "'" . $uid . "',";
@@ -20,7 +20,7 @@ function insert_to_user_ingredient(int $uid,int $ingredient_id,$db,array &$error
 }
 
 function delete_from_user_ingredient(int $uid, int $iid, $db, array &$error): bool{
-	$sql = "DELETE FROM `user-ingredient`";
+	$sql = "DELETE FROM `user_ingredient`";
 	$sql .= " WHERE ";
 	$sql .= "(`user_id` =". $uid . ") and ";
 	$sql .= "(`ingredient_id` =". $iid . ");";
@@ -33,7 +33,7 @@ function delete_from_user_ingredient(int $uid, int $iid, $db, array &$error): bo
 
 
  function user_ingredient_list(string $user,int $num,$db,&$error): array{
-      $sql = "SELECT `ingredient`.name from `users` join `user-ingredient` on `users`.id=`user-ingredient`.user_id join ingredient on `user-ingredient`.ingredient_id=`ingredient`.id ";
+      $sql = "SELECT `ingredient`.name from `users` join `user_ingredient` on `users`.id=`user_ingredient`.user_id join ingredient on `user_ingredient`.ingredient_id=`ingredient`.id ";
       $sql .= "where `users`.name='" . $user ."'";
 
       $ingredient_list = [];

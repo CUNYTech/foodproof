@@ -31,7 +31,7 @@ function add_ingredient($user,$ingredient,$db, &$error): int{
   }
 
 function get_ingredient_id_by_user_id(int $uid, int $num, $db, array&$error) {
-  $sql = "SELECT `ingredient_id` FROM `user-ingredient` ";
+  $sql = "SELECT `ingredient_id` FROM `user_ingredient` ";
   $sql .= "WHERE `user_id`=".$uid;
   $sql .= " LIMIT ".$num." ;";
 
