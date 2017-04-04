@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".Login" />
         <activity android:name=".Register" />
-        <activity android:name=".MenuActivity" />
+        <activity android:name=".MenuActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".SearchActivity" />
         <activity android:name=".Profile" />
     </application>
