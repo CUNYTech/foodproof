@@ -31,7 +31,7 @@ import org.json.*;
 public class Login extends AppCompatActivity  implements View.OnClickListener{
 
     //Variables used to manipulate and work with the views of the Login activity
-    Button bLogin, bRegister;
+    TextView bLogin, bRegister;
     EditText etUsername, etPassword;
     TextView tvResults;
     String Username;
@@ -48,7 +48,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         bLogin = (Button) findViewById(R.id.btLogin);
-        bRegister = (Button) findViewById(R.id.btRegister);
+        bRegister = (TextView) findViewById(R.id.textRegister);
 
         //Setting OnClickListeners so that the buttons can respond to click events
         bLogin.setOnClickListener(this);
@@ -84,7 +84,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
                 break;
 
             //Case where Login button is clicked
-            case R.id.btRegister:
+            case R.id.textRegister:
                 //Open up the Register activity.
                 startActivity(new Intent(this, Register.class));
                 break;
