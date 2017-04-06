@@ -25,18 +25,6 @@
             android:scaleType="fitXY"
             />
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="15dp"-->
-            <!--android:text="Username"-->
-            <!--android:textColor="@android:color/holo_blue_dark"/>-->
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Password"-->
-            <!--android:textColor="@android:color/holo_blue_dark"/>-->
-
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
@@ -56,7 +44,6 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-
             android:background="@drawable/rect_text_edit"
             android:hint="Password"
             android:inputType="textPassword"
@@ -80,6 +67,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="72dp"
+            android:background="@drawable/default_button"
             android:text="Register" />
 
         <Button
@@ -90,7 +78,9 @@
             android:layout_above="@+id/btRegister"
             android:layout_alignLeft="@+id/btRegister"
             android:layout_alignStart="@+id/btRegister"
-            android:layout_marginBottom="11dp" />
+            android:layout_marginBottom="11dp"
+            android:background="@drawable/default_button"
+            />
 
 
     </RelativeLayout>
