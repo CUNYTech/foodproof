@@ -10,7 +10,7 @@ if we do then  creates connection in
 if connection succeeds then it imports query 
 it checks if user exists, 
 then extracts user id from user table
-then extracts content in user-ingredient table with that user id of ampunt directed in post
+then extracts content in user_ingredient table with that user id of ampunt directed in post
 then it retrieves name of each ingredient id we get
 *****************************************************************************
 input: POST "user","count" required on /ingredient/return
@@ -30,7 +30,7 @@ $app->post('/ingredient/return', function($request, $response, $path = null) {
 
 	//check if exists
 	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['count'])){$error["Count"]["count"]="not entered";}
+	if(!isset($data['count'])){$error["Error"]["count"]="not entered";}
 	
 	// if no error continue
 	if(sizeof($error)==0){
@@ -48,7 +48,7 @@ $app->post('/ingredient/return', function($request, $response, $path = null) {
 			// if no error respond
 			if(sizeof($error)==0){
 				$list["Result"] = "succeed";
-                $out = json_encode($list,JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
+                $out = json_encode($list,JSON_PRETTY_PRINT);
 				$response->getBody()->write($out);
 			}
 			
