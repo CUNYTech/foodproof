@@ -3,6 +3,7 @@
 define('ROOT',dirname(dirname(__FILE__)));
 define ('FUN',ROOT.'/function');
 define ('IMAGE',ROOT.'/image');
+define ('PROFILE_PICTURE',ROOT.'/profile_picture');
 define('ROUTE',FUN.'/route');
 define('DB',FUN.'/database.php');
 define('QUERY',FUN.'/query');

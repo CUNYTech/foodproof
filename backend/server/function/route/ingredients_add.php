@@ -13,7 +13,7 @@ if connection succeeds then it imports query
 it checks if username exists by checking if user id for that user exists , 
 if user_id is returned then add the ingredient to ingredient table
 then extract id of that ingredient from ingredient table
-add user_id and ingredient_if to the user-ingredient table
+add user_id and ingredient_if to the user_ingredient table
 
 *****************************************************************************
 input: POST "user","count" required on /ingredient/return
@@ -53,12 +53,12 @@ $app->post('/ingredient/add', function($request, $response, $path = null) {
 			if(isset($_FILES['image'])) {
 
 				// upload file
-				$image_data=image_upload('image',$error);
+				$image_data=image_upload('image',IMAGE,$error);
 
 				// save records to db
 				if($image_data){
 					// no error in this one, continue just display if image not loaded
-					add_image_data($image_data,$ingredient_id,$db,$out);
+					add_ingredient_image_data($image_data,$ingredient_id,$db,$out);
 					if(sizeof($out)==0){
 						$out['Upload']='succeed';
 					}

@@ -7,6 +7,7 @@ package edu.cuny.foodproof;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -34,11 +36,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
-
     EditText etSearchParameter;
     TextView tvResult;
+    ListView lvResult;
+    List<String> links;
+    ArrayAdapter<String> mArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +52,21 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         etSearchParameter = (EditText) findViewById(R.id.etSearch);
+
         tvResult = (TextView) findViewById(R.id.tvResult);
+
+        lvResult = (ListView) findViewById(R.id.lvResult);
+
+        lvResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id){
+                String toURL = links.get(position);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(toURL));
+                startActivity(browserIntent);
+            }
+
+        });
 
     }
 
@@ -133,15 +153,19 @@ public class SearchActivity extends AppCompatActivity {
             try {
 
                 JSONObject fullResult = new JSONObject(result);
+                JSONArray recipeArray = fullResult.getJSONArray("recipes");
+                List<String> items = new ArrayList<>();
+                links = new ArrayList<>();
 
-                JSONArray resultArray = fullResult.getJSONArray("recipes");
 
-                JSONObject resultObject = resultArray.getJSONObject(0);
+                for(int i = 0; i < recipeArray.length(); i++){
+                    items.add(recipeArray.getJSONObject(i).getString("title"));
+                    links.add(recipeArray.getJSONObject(i).getString("source_url"));
+                }
 
-                String searchJSON = resultObject.getString("title");
+                mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.activity_profile,R.id.tvIngredients,items);
 
-                tvResult.setText(searchJSON);
-
+                lvResult.setAdapter(mArrayAdapter);
             }
             catch(JSONException e){
                 throw new RuntimeException(e);
@@ -281,15 +305,19 @@ public class SearchActivity extends AppCompatActivity {
             try {
 
                 JSONObject fullResult = new JSONObject(result);
+                JSONArray recipeArray = fullResult.getJSONArray("recipes");
+                List<String> items = new ArrayList<>();
+                links = new ArrayList<>();
 
-                JSONArray resultArray = fullResult.getJSONArray("recipes");
 
-                JSONObject resultObject = resultArray.getJSONObject(0);
+                for(int i = 0; i < recipeArray.length(); i++){
+                    items.add(recipeArray.getJSONObject(i).getString("title"));
+                    links.add(recipeArray.getJSONObject(i).getString("source_url"));
+                }
 
-                String searchJSON = resultObject.getString("title");
+                mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.activity_profile,R.id.tvIngredients,items);
 
-                tvResult.setText(searchJSON);
-
+                lvResult.setAdapter(mArrayAdapter);
             }
             catch(JSONException e){
                 throw new RuntimeException(e);
