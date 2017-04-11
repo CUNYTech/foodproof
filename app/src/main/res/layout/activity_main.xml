@@ -11,9 +11,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/empty_plate"
-        android:scaleType="centerCrop"
-        
+        android:src="@drawable/chop"
+        android:scaleType="fitXY"
 
         />
 
@@ -21,45 +20,60 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="96dp"
+        android:layout_centerHorizontal="true"
         android:text="Add Ingredients"
-        android:onClick="buttonClick"/>
+        android:onClick="buttonClick"
+        android:layout_marginTop="40dp"
+        />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button3"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button"
         android:text="Browse Recipes"
-        android:onClick="searchClick"/>
+        android:onClick="searchClick"
+        android:layout_marginTop="50dp"
+
+        />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_below="@+id/button"
-        android:layout_marginTop="132dp"
-        android:text="Manage Recipes" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button2"
+        android:text="Manage Recipes"
+        android:layout_marginTop="50dp"
+        />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button3"
-        android:layout_alignBottom="@+id/button3"
-        android:layout_alignEnd="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button3"
         android:layout_alignRight="@+id/button2"
-        android:text="Find Ingredients" />
+        android:text="Find Ingredients"
+        android:layout_marginTop="50dp"
+        />
+    <Button
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button4"
+        android:layout_alignRight="@+id/button2"
+        android:text="Give me a recipe"
+        android:layout_marginTop="50dp"
+        android:onClick="findARecipe"
+
+
+        />
+
+
+
+
 
 </RelativeLayout>
