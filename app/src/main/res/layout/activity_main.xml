@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:text="Add Ingredients"
         android:onClick="buttonClick"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         />
 
     <Button
@@ -58,5 +58,21 @@
         android:text="Find Ingredients"
         android:layout_marginTop="50dp"
         />
+    <Button
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button4"
+        android:layout_alignRight="@+id/button2"
+        android:text="Find Around Me"
+        android:layout_marginTop="50dp"
+
+
+        />
+
+
+
+
 
 </RelativeLayout>
