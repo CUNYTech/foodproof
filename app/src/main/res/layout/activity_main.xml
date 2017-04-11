@@ -65,8 +65,9 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/button4"
         android:layout_alignRight="@+id/button2"
-        android:text="Find Around Me"
+        android:text="Give me a recipe"
         android:layout_marginTop="50dp"
+        android:onClick="findARecipe"
 
 
         />
