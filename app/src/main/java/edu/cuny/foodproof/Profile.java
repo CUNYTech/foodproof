@@ -41,6 +41,7 @@ import java.util.List;
 public class Profile extends AppCompatActivity {
     TextView tvUsername;
     TextView tvIngredients;
+    TextView tvCoords;
     ListView lvIngredients;
     ArrayAdapter<String> mArrayAdapter;
 
@@ -53,7 +54,9 @@ public class Profile extends AppCompatActivity {
 
         tvIngredients = (TextView) findViewById(R.id.tvIngredients);
 
-        lvIngredients = (ListView) findViewById(android.R.id.list);
+        tvCoords = (TextView) findViewById(R.id.tvCoords);
+
+        lvIngredients = (ListView) findViewById(R.id.lvIngredients);
 
         lvIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -78,7 +81,7 @@ public class Profile extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return;
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, locationListener);
@@ -165,7 +168,8 @@ public class Profile extends AppCompatActivity {
                     items.add(resultArray.getString(i));
                 }
 
-                mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.activity_profile,R.id.tvIngredients,items);
+                mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_ingredients, R.id.tvIngredients2,items);
+
 
                 lvIngredients.setAdapter(mArrayAdapter);
             }
@@ -269,10 +273,11 @@ public class Profile extends AppCompatActivity {
         public void onLocationChanged(Location loc) {
             //editLocation.setText("");
             //pb.setVisibility(View.INVISIBLE);
-            String longitude = "Longitude: " + loc.getLongitude();
+            String longitude = "Longitude: " + loc.getLongitude() + "\n";
             //Log.v(TAG, longitude);
             String latitude = "Latitude: " + loc.getLatitude();
             //Log.v(TAG, latitude);
+            tvCoords.setText(longitude + latitude);
         }
 
         @Override
