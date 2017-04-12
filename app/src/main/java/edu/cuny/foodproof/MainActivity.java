@@ -63,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(findARecipeIntent);
 
     }
+    public void findIngredients (View view){
+        Intent findIngredients = new Intent (this, MapsActivity.class);
+        startActivity(findIngredients);
+    }
+
+
 
 }
 
