@@ -98,3 +98,17 @@ ALTER TABLE `user_profile_pictures`
     ADD CONSTRAINT `image_constraint`
       FOREIGN KEY (`image_id`) 
         REFERENCES `profile_pictures`(`id`);
+
+
+CREATE TABLE `user_location` (
+   `user_id` int(11),
+  `lat` float(11),
+  `lon` float(11),
+  `created_at` datetime,
+  PRIMARY KEY (`user_id`)
+) ;
+
+ALTER TABLE `user_location`
+  ADD CONSTRAINT `user_location_to_uid` 
+  FOREIGN KEY (`user_id`)
+      REFERENCES `users`(`id`);
