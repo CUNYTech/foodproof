@@ -80,9 +80,6 @@
             android:layout_marginTop="103dp"
             android:layout_alignTop="@+id/etPassword"
             android:layout_centerHorizontal="true" />
-            <!--android:layout_above="@+id/btRegister"-->
-            <!--android:layout_alignLeft="@+id/btRegister"-->
-            <!--android:layout_alignStart="@+id/btRegister" />-->
 
 
     </RelativeLayout>

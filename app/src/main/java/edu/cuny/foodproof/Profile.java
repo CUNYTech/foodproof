@@ -69,10 +69,6 @@ public class Profile extends AppCompatActivity {
 
         });
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        LocationListener locationListener = new MyLocationListener();
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -84,7 +80,18 @@ public class Profile extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
 
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new MyLocationListener();
+
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, locationListener);
+
+        if(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) != null) {
+            String longitude = "Longitude: " + locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude() + "\n";
+            String finalCoords = longitude + "Latitude: " + locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
+            tvCoords.setText(finalCoords);
+        }
+
 
         try {
             new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/ingredient/return");
