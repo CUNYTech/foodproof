@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_profile"
+    android:id="@+id/listview_ingredients"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,35 +13,12 @@
     tools:context="edu.cuny.foodproof.Profile">
 
     <TextView
-        android:id="@+id/tvCoords"
+        android:id="@+id/tvIngredients2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20sp"
         android:textSize="20sp"
         android:textAlignment="center"
         android:text=""/>
-
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
-        android:textSize="40sp"
-        android:textAlignment="center"
-        android:text=""/>
-
-    <ListView
-        android:id="@+id/lvIngredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tvIngredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:text=""/>
-
 
 </LinearLayout>

@@ -1,14 +1,20 @@
 package edu.cuny.foodproof;
 
+import android.Manifest;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,6 +41,7 @@ import java.util.List;
 public class Profile extends AppCompatActivity {
     TextView tvUsername;
     TextView tvIngredients;
+    TextView tvCoords;
     ListView lvIngredients;
     ArrayAdapter<String> mArrayAdapter;
 
@@ -47,18 +54,44 @@ public class Profile extends AppCompatActivity {
 
         tvIngredients = (TextView) findViewById(R.id.tvIngredients);
 
-        lvIngredients = (ListView) findViewById(android.R.id.list);
+        tvCoords = (TextView) findViewById(R.id.tvCoords);
+
+        lvIngredients = (ListView) findViewById(R.id.lvIngredients);
 
         lvIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> a, View v, int position, long id){
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 new makeDeletePostRequest().execute(mArrayAdapter.getItem(position), "http://ec2-54-90-187-63.compute-1.amazonaws.com/ingredient/delete");
                 mArrayAdapter.remove(mArrayAdapter.getItem(position));
                 mArrayAdapter.notifyDataSetChanged();
             }
 
         });
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new MyLocationListener();
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, locationListener);
+
+        if(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) != null) {
+            String longitude = "Longitude: " + locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude() + "\n";
+            String finalCoords = longitude + "Latitude: " + locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
+            tvCoords.setText(finalCoords);
+        }
+
 
         try {
             new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/ingredient/return");
@@ -142,7 +175,8 @@ public class Profile extends AppCompatActivity {
                     items.add(resultArray.getString(i));
                 }
 
-                mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.activity_profile,R.id.tvIngredients,items);
+                mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_ingredients, R.id.tvIngredients2,items);
+
 
                 lvIngredients.setAdapter(mArrayAdapter);
             }
@@ -237,6 +271,30 @@ public class Profile extends AppCompatActivity {
 
         }
 
+    }
+
+    /*---------- Listener class to get coordinates ------------- */
+    private class MyLocationListener implements LocationListener {
+
+        @Override
+        public void onLocationChanged(Location loc) {
+            //editLocation.setText("");
+            //pb.setVisibility(View.INVISIBLE);
+            String longitude = "Longitude: " + loc.getLongitude() + "\n";
+            //Log.v(TAG, longitude);
+            String latitude = "Latitude: " + loc.getLatitude();
+            //Log.v(TAG, latitude);
+            tvCoords.setText(longitude + latitude);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {}
+
+        @Override
+        public void onProviderEnabled(String provider) {}
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
     }
 
 }
