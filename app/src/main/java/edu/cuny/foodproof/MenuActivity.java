@@ -41,6 +41,7 @@ public class MenuActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.slide_right, R.anim.fade_out);
         setContentView(R.layout.activity_menu);
         fridgeButton = (Button)findViewById(R.id.button5);
         lv = (ListView) findViewById(R.id.list);

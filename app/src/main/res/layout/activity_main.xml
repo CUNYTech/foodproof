@@ -57,6 +57,7 @@
         android:layout_alignRight="@+id/button2"
         android:text="Find Ingredients"
         android:layout_marginTop="50dp"
+        android:onClick="findIngredients"
         />
     <Button
         android:id="@+id/location"

@@ -48,6 +48,8 @@ public class Profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        overridePendingTransition(R.anim.slide_right, R.anim.fade_out);
         setContentView(R.layout.activity_profile);
 
         tvUsername = (TextView) findViewById(R.id.tvUsername);
