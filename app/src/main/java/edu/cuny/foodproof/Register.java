@@ -32,6 +32,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        overridePendingTransition(R.anim.slide_right, R.anim.fade_out);
         setContentView(R.layout.activity_register);
 
         etName = (EditText) findViewById(R.id.etName);

@@ -13,6 +13,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // slides activity right and fades out
+        overridePendingTransition(R.anim.slide_right, R.anim.fade_out);
+
         setContentView(R.layout.activity_main);
         Intent mainIntent = getIntent();
         if (!(mainIntent.hasExtra("loggedIn"))) {
