@@ -8,17 +8,18 @@
     tools:context="edu.cuny.foodproof.Register">
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/pepper_slice3"
-        android:scaleType="center"
-        />
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/pepper_slice3"-->
+        <!--android:scaleType="center"-->
+        <!--/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#f6d45d"
         >
 
         <!--<TextView-->
