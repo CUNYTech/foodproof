@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     public void buttonClick(View v) {
         Intent intent = new Intent(MainActivity.this, MenuActivity.class);
         startActivity(intent);
@@ -56,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent logOutIntent = new Intent(this, MainActivity.class);
                 startActivity(logOutIntent);
                 return true;
+
+            case R.id.menu_calender:
+                // Calender was selected
+                Intent menu_Calender = new Intent(this, Calender.class);
+                startActivity(menu_Calender);
+                return true;
+
 
             default:
                 return super.onOptionsItemSelected(item);

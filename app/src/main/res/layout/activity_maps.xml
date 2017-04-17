@@ -32,34 +32,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Type: " />
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onNormalMap"
             android:text="Normal" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onSatelliteMap"
-            android:text="Satellite" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onTerrainMap"
-            android:text="Terrain" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onHybridMap"
-            android:text="Hybrid" />
 
     </LinearLayout>
 
