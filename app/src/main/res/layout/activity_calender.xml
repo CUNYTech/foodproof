@@ -3,11 +3,16 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <CalendarView
+    <!--<CalendarView-->
+        <!--android:id="@+id/Calender"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:maxDate="01/01/2018"-->
+        <!--android:minDate="01/01/2017" />-->
+
+    <FrameLayout
         android:id="@+id/Calender"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:maxDate="01/01/2018"
-        android:minDate="01/01/2017" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
