@@ -125,4 +125,4 @@ ALTER TABLE `recipe`
   ADD CONSTRAINT `recipe_to_user_uid` 
   FOREIGN KEY (`user_id`)
       REFERENCES `users`(`id`);
-alter table `recipe` add constraint `unique_recipe_created_at` unique (`created_at`); 
+alter table `recipe` add constraint `unique_recipe_created_at` unique (`user_id`,`created_at`); 
