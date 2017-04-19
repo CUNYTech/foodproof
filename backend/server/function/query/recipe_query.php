@@ -27,26 +27,34 @@ function insert_to_recipe_table(int $uid, string $recipe, string $date, $db,arra
 	 return false;  
 }
 
-function add_recipe($username, $recipe,$date, $db, &$error){
+function add_recipe($username, $recipe, $date, $db, &$error){
 	$uid = get_user_id_by_name($username, $db, $error);
     if(sizeof($error)>0) return Null;
-
     return insert_to_recipe_table($uid, $recipe, $date, $db, $error);
 }
 
   function get_recipe_list_name_by_uid(int $uid,$db,array &$error): array{
-  	$sql ="SELECT * FROM `recipe` WHERE ";
-  	$sql.= "`user_id` ='" . $uid . "'";
+	 validate_uid($uid,$error);
 
-  	$result = db_query($db, $sql, $error);
-    if(sizeof($error)>0) return [];
 
-    $out=[];
-    while($row=db_fetch_assoc($result)){
-    	$out[]=$row;
-    }
+	 if(sizeof($error)==0){
+		$sql ="SELECT * FROM `recipe` WHERE ";
+		$sql.= "`user_id` ='" . $uid . "'";
 
-    return $out;
+		$result = db_query($db, $sql, $error);
+		if(sizeof($error)>0) return [];
+
+		$out=[];
+		while($row=db_fetch_assoc($result)){
+		$out[]=$row;
+		}
+
+		return $out;
+	 }
+
+  	else{
+  		return Null;
+  	}
   }
 
 //returns date=>recipe
