@@ -63,9 +63,13 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id){
-                String toURL = links.get(position);
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(toURL));
-                startActivity(browserIntent);
+                String toURL = links.get(position);                 //pass url through intents
+                SharedPreferences sharedpref = getSharedPreferences("Pref", MODE_APPEND);
+                SharedPreferences.Editor editor = sharedpref.edit();
+                editor.putString("recipeURL", toURL);
+                editor.commit();
+                Intent openRecipe = new Intent(SearchActivity.this, WebViewActivity.class);
+                startActivity(openRecipe);
             }
 
         });
