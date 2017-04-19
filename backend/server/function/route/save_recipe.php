@@ -10,7 +10,8 @@ $app->post('/save_recipe', function($request, $response, $path = null) {
 	//check if exists
 	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
 	if(!isset($data['recipe'])){$error["Error"]["recipe"]="not entered";}
-	
+	if(!isset($data['date'])){$error["Error"]["date"]="not entered";}
+
 	// if no error continue
 	if(sizeof($error)==0){
 
@@ -21,8 +22,9 @@ $app->post('/save_recipe', function($request, $response, $path = null) {
 			// sanitize
 			$user= filter_var($data['user'],FILTER_SANITIZE_STRING);
 			$recipe = filter_var($data['recipe'],FILTER_SANITIZE_STRING);
+			$date= $data['date'];
 			
-			add_recipe($user,$recipe,$db,$error);
+			add_recipe($user,$recipe,$date,$db,$error);
 
 			// if no error respond
 			if(sizeof($error)==0){

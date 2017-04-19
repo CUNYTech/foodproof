@@ -4,28 +4,34 @@ declare(strict_types=1);
 // if not imported import database and user script
   include_once DB;
 
-function insert_to_recipe_table(int $uid, string $recipe,$db,array &$error): bool{
-      $created_at = date("Y-m-d H:i:s");
-      $sql = "INSERT INTO recipe";
-      $sql .= "(user_id, recipe , created_at) ";
-      $sql .= "VALUES (";
-      $sql .= "'" . $uid . "',";
-      $sql .= "'" . db_escape($db, $recipe) . "',";
-      $sql .= "'" . $created_at . "'";
-      $sql .= ");";
+function insert_to_recipe_table(int $uid, string $recipe, string $date, $db,array &$error): bool{
+	 validate_uid($uid,$error);
+	 validate_recipe($recipe,$error);
+	 validate_date($date,$error);
 
-      // For INSERT statements, $result is just true/false
-      $result = db_query($db, $sql, $error);
-      
-      if(!$result){return false;}
-      else{return true;}
+	 if(sizeof($error)==0){
+	 	$sql = "INSERT INTO recipe";
+		$sql .= "(user_id, recipe , created_at) ";
+		$sql .= "VALUES (";
+		$sql .= "'" . $uid . "',";
+		$sql .= "'" . db_escape($db, $recipe) . "',";
+		$sql .= "'" . $date . "'";
+		$sql .= ");";
+
+		// For INSERT statements, $result is just true/false
+		$result = db_query($db, $sql, $error);
+
+		if(!$result){return false;}
+		else{return true;}
+	 }
+	 return false;  
 }
 
-function add_recipe($username, $recipe, $db, &$error){
+function add_recipe($username, $recipe,$date, $db, &$error){
 	$uid = get_user_id_by_name($username, $db, $error);
     if(sizeof($error)>0) return Null;
 
-    return insert_to_recipe_table($uid, $recipe, $db, $error);
+    return insert_to_recipe_table($uid, $recipe, $date, $db, $error);
 }
 
   function get_recipe_list_name_by_uid(int $uid,$db,array &$error): array{
@@ -53,7 +59,7 @@ function add_recipe($username, $recipe, $db, &$error){
 
      $recipe_out =[];
      foreach ($recipe as $value) {
-     	$recipe_out[$value['created_at']] = $value['recipe'];
+     	$recipe_out[$value['created_at']][] = $value['recipe'];
      }
      return $recipe_out;
   }

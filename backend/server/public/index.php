@@ -6,6 +6,7 @@ define ('IMAGE',ROOT.'/image');
 define ('PROFILE_PICTURE',ROOT.'/profile_picture');
 define('ROUTE',FUN.'/route');
 define('DB',FUN.'/database.php');
+define('VALIDATION',FUN.'/validation.php');
 define('QUERY',FUN.'/query');
 define('USER',QUERY.'/user_query.php');
 define('INGREDIENT',QUERY.'/ingredient_query.php');
@@ -15,6 +16,9 @@ define('USER_INGREDIENT',QUERY.'/user_ingredient_functions.php');
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Exception ;
+
+ include_once DB;
+ include_once VALIDATION;
 
 require '../vendor/autoload.php';
 
