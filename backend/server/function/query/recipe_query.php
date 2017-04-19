@@ -63,7 +63,7 @@ function add_recipe($username, $recipe, $date, $db, &$error){
 
     $recipe_out =[];
     while($value = db_fetch_assoc($recipe_result)) {
-     	$recipe_out[$value['created_at']][] = $value['recipe'];
+     	$recipe_out[$value['created_at']] = $value['recipe'];
      }
      return $recipe_out;
   }

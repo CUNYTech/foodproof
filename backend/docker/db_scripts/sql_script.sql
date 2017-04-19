@@ -120,7 +120,9 @@ CREATE TABLE `recipe` (
   `created_at` datetime,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2; 
+
 ALTER TABLE `recipe`
   ADD CONSTRAINT `recipe_to_user_uid` 
   FOREIGN KEY (`user_id`)
       REFERENCES `users`(`id`);
+alter table `recipe` add constraint `unique_recipe_created_at` unique (`created_at`); 
