@@ -1,17 +1,12 @@
 <?php
 
-$app->post('/save_recipe', function($request, $response, $path = null) {
+$app->post('/get_all_recipe', function($request, $response, $path = null) {
 	$data = $request->getParsedBody();
 
 	// create error array
 	$error=[];
 	$out=[];
-
-	//check if exists
-	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['recipe'])){$error["Error"]["recipe"]="not entered";}
-	if(!isset($data['date'])){$error["Error"]["date"]="not entered";}
-
+	
 	// if no error continue
 	if(sizeof($error)==0){
 
@@ -19,17 +14,14 @@ $app->post('/save_recipe', function($request, $response, $path = null) {
 		$db=db_connect($error);
 
 		if($db){
-			// sanitize
-			$user= filter_var($data['user'],FILTER_SANITIZE_STRING);
-			$recipe = filter_var($data['recipe'],FILTER_SANITIZE_STRING);
-			$date= filter_var($data['date'],FILTER_VALIDATE_INT); // date in epoc
-			
-			add_recipe($user,$recipe,$date,$db,$error);
+
+			$recipe_list = get_all_recipe_and_date_by_user_name($db,$error);
 
 			// if no error respond
 			if(sizeof($error)==0){
 				$out['Result']='succeed';
-				$out= json_encode($out,JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
+				$out['Recipes'] =$recipe_list;
+				$out= json_encode($out, JSON_PRETTY_PRINT);
 				$response->getBody()->write($out);
 			}
 			

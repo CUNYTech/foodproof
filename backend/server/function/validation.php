@@ -13,6 +13,7 @@ function validate_uid($uid,&$error){
 	else{
 		$error['error']['validation']['user_id']="user id needs to be integer";
 	}
+		return false;
 
 }
 
@@ -20,10 +21,19 @@ function validate_recipe($recipe,&$error){
 	
 }
 
-function validate_date($date,&$error){
-	$date = trim($date);
-	if(strlen($date)!=19 || !DateTime::createFromFormat('Y-m-d H:i:s', $date)) {
-		$error['error']['validation']['date']= 'Invalid format incorrect: required "Y-m-d H:i:s"';
-	}
+function validate_date($long_date,&$error){
+	if(((string) (int) $long_date == $long_date)){ // type and value compare
+		if($long_date>0){
+			return true;
+		}
+		else{
+			$error['error']['validation']['date']="date needs to be positive integer";	
+			}
+		}
+		else{
+			$error['error']['validation']['date']=$long_date . " date needs to be integer";
+		}
+
+		return false;
 }
 
