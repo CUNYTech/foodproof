@@ -112,3 +112,15 @@ ALTER TABLE `user_location`
   ADD CONSTRAINT `user_location_to_uid` 
   FOREIGN KEY (`user_id`)
       REFERENCES `users`(`id`);
+
+CREATE TABLE `recipe` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11),
+  `recipe` varchar(255) DEFAULT NULL,
+  `created_at` datetime,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2; 
+ALTER TABLE `recipe`
+  ADD CONSTRAINT `recipe_to_user_uid` 
+  FOREIGN KEY (`user_id`)
+      REFERENCES `users`(`id`);

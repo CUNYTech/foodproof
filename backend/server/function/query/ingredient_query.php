@@ -5,12 +5,12 @@ declare(strict_types=1);
   include_once DB;
 
 // ingredient query
-function insert_to_ingredient_table(string $user,$db,array &$error): bool{
+function insert_to_ingredient_table(string $name,$db,array &$error): bool{
       $created_at = date("Y-m-d H:i:s");
       $sql = "INSERT INTO ingredient";
       $sql .= "(name,created_at) ";
       $sql .= "VALUES (";
-      $sql .= "'" . db_escape($db, $user) . "',";
+      $sql .= "'" . db_escape($db, $name) . "',";
       $sql .= "'" . $created_at . "'";
       $sql .= ");";
 
