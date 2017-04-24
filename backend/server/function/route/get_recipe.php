@@ -24,7 +24,7 @@ $app->post('/get_recipe', function($request, $response, $path = null) {
 
 			// if no error respond
 			if(sizeof($error)==0){
-				$out['Result']='succeed';
+				$out['Result']='succeed'; 
 				$out['Recipes'] =$recipe_list;
 				$out= json_encode($out, JSON_PRETTY_PRINT);
 				$response->getBody()->write($out);

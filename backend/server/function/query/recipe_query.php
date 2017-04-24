@@ -64,7 +64,7 @@ function add_recipe($username, $recipe, $date, $db, &$error){
     $recipe_out =[];
     while($value = db_fetch_assoc($recipe_result)) {
     	$time = new DateTime($value['created_at']);
-     	$recipe_out[$time->getTimestamp()] = $value['recipe'];
+     	$recipe_out[]=[$time->getTimestamp(), $value['recipe']];
      }
      return $recipe_out;
   }
@@ -78,7 +78,7 @@ function add_recipe($username, $recipe, $date, $db, &$error){
 	$recipe_out=[];
 	while($value=db_fetch_assoc($result)){
 		$time = new DateTime($value['created_at']);
-		$recipe_out[$value['name']][$time->getTimestamp()] = $value['recipe'];
+		$recipe_out[$value['name']][]=[$time->getTimestamp(), $value['recipe']];
 	}
 
 	return $recipe_out;
