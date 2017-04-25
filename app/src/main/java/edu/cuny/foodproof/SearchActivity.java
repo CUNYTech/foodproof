@@ -69,6 +69,7 @@ public class SearchActivity extends AppCompatActivity {
                 editor.putString("recipeURL", toURL);
                 editor.commit();
                 Intent openRecipe = new Intent(SearchActivity.this, WebViewActivity.class);
+                openRecipe.putExtra("Recipe", lvResult.getItemAtPosition(position).toString());
                 startActivity(openRecipe);
             }
 

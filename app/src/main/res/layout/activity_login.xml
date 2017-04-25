@@ -16,8 +16,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/testpic"
             android:scaleType="fitXY" />
+        <!--android:src="@drawable/testpic"-->
+
 
         <EditText
             android:id="@+id/etUsername"

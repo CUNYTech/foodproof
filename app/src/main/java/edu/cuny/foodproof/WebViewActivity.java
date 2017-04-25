@@ -27,6 +27,7 @@ public class WebViewActivity extends Activity {
 
     public void addRecipe(View v){
         Intent saveRecipeIntent = new Intent(this, AddRecipeActivity.class);
+        saveRecipeIntent.putExtra("Recipe", getIntent().getStringExtra("Recipe"));
         startActivity(saveRecipeIntent);
     }
 
