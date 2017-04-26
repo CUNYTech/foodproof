@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.content.SharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, Login.class));
         }
     }
+
+
 
     public void buttonClick(View v) {
         Intent intent = new Intent(MainActivity.this, MenuActivity.class);
@@ -57,14 +60,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(logOutIntent);
                 return true;
 
+            case R.id.menu_calender:
+                // Calender was selected
+                Intent menu_Calender = new Intent(this, Calender.class);
+                startActivity(menu_Calender);
+                return true;
+
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     public void findARecipe(View view) {
-        Intent findARecipeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.randomlists.com/random-recipes"));
+        Intent findARecipeIntent = new Intent(this, WebViewActivity.class);
         startActivity(findARecipeIntent);
+        SharedPreferences sharedpref = getSharedPreferences("Pref", MODE_APPEND);
+        SharedPreferences.Editor editor = sharedpref.edit();
+        editor.putString("recipeURL", "https://www.randomlists.com/random-recipes");
+        editor.commit();
 
     }
     public void findIngredients (View view){
