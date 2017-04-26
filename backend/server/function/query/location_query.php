@@ -16,6 +16,7 @@ function update_location($user,$lat,$lon,$db,&$error){
 		}
 	}
 }
+
 function location_exists($id,$db,&$error){
 	 $sql = "SELECT * FROM user_location ";
     $sql .= "WHERE user_id='" . $id . "' ";
