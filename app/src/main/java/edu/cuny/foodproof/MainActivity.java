@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.view.Menu;
 import android.content.SharedPreferences;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -37,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
     public void searchClick(View v) {
         Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
         startActivity(searchIntent);
+    }
+
+    public void whatisClick(View v) {
+        Intent whatisIntent = new Intent(MainActivity.this, WhatisIt.class);
+        startActivity(whatisIntent);
     }
 
     @Override
@@ -86,6 +94,19 @@ public class MainActivity extends AppCompatActivity {
         startActivity(findIngredients);
     }
 
+
+    private boolean CheckGooglePlayServices() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if(result != ConnectionResult.SUCCESS) {
+            if(googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(this, result,
+                        0).show();
+            }
+            return false;
+        }
+        return true;
+    }
 
 
 }

@@ -31,9 +31,14 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.android.gms:play-services-maps:10.2.1'
     compile 'com.roomorama:caldroid:3.0.1'
+
+    // using onyx for api
     testCompile 'junit:junit:4.12'
+    compile 'com.github.hanuor:pearl:0.0.8'
+    compile 'com.hanuor.onyx:onyx:1.1.3'
+
 }

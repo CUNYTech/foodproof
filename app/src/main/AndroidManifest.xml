@@ -65,7 +65,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.cuny.foodproof.MainActivity" />
         </activity>
-        <activity android:name=".AddRecipeActivity"></activity>
+        <activity android:name=".WhatisIt" />
+
     </application>
 
 </manifest>

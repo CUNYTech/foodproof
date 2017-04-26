@@ -35,7 +35,6 @@
         android:text="Browse Recipes"
         android:onClick="searchClick"
         android:layout_marginTop="50dp"
-
         />
 
     <Button
@@ -44,7 +43,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/button2"
-        android:text="Manage Recipes"
+        android:text="What is it ?"
+        android:onClick="whatisClickk"
         android:layout_marginTop="50dp"
         />
 
