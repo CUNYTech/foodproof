@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/button2"
-        android:text="What is it ?"
+        android:text="Feeling Hungry ?"
         android:onClick="whatisClickIt"
         android:layout_marginTop="50dp"
         />
