@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     public void buttonClick(View v) {
         Intent intent = new Intent(MainActivity.this, MenuActivity.class);
         startActivity(intent);
@@ -42,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(searchIntent);
     }
 
-    public void whatisClick(View v) {
+    public void whatisClickIt(View v) {
         Intent whatisIntent = new Intent(MainActivity.this, WhatisIt.class);
         startActivity(whatisIntent);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

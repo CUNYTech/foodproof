@@ -30,7 +30,7 @@ public class WhatisIt extends AppCompatActivity {
             imageView = (ImageView) findViewById(R.id.ivy);
             tv = (TextView) findViewById(R.id.textView);
             final ProgressDialog pd = new ProgressDialog(WhatisIt.this);
-            final String mImage = "https://cdn.tutsplus.com/photo/uploads/legacy/720_blackwhiteRU/65.jpg";
+            final String mImage = "http://lorempixel.com/600/300/food";
             Pearl.imageLoader(WhatisIt.this,mImage,imageView,0);
 
             btn.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +45,6 @@ public class WhatisIt extends AppCompatActivity {
                             pd.dismiss();
                             tv.setText(response.toString());
                             tv.setTextColor(Color.parseColor("#ffffff"));
-
 
                         }
                     });
