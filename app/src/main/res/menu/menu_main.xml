@@ -9,9 +9,18 @@
         android:orderInCategory="1"
         app:showAsAction="never"
         android:title="Edit Profile"/>
+
     <item
-        android:id="@+id/menu_logout"
+        android:id="@+id/menu_calender"
         android:orderInCategory="2"
         app:showAsAction="never"
+        android:title="Calender"/>
+
+    <item
+        android:id="@+id/menu_logout"
+        android:orderInCategory="3"
+        app:showAsAction="never"
         android:title="Log Out"/>
+
+
 </menu>
