@@ -37,3 +37,12 @@ function validate_date($long_date,&$error){
 		return false;
 }
 
+function validate_private($private, &$error){
+	if($private=='true' || $private == 'false'){
+		return true;
+	}
+	 else {
+		$error['error']['private']="private is flag, needs true or false";
+		return false;
+	}
+}

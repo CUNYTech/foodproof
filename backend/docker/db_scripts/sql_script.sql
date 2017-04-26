@@ -126,3 +126,5 @@ ALTER TABLE `recipe`
   FOREIGN KEY (`user_id`)
       REFERENCES `users`(`id`);
 alter table `recipe` add constraint `unique_recipe_created_at` unique (`user_id`,`created_at`); 
+ALTER TABLE recipe
+ADD COLUMN private boolean default true;

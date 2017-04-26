@@ -8,23 +8,23 @@ $app->post('/save_recipe', function($request, $response, $path = null) {
 	$out=[];
 
 	//check if exists
-	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['recipe'])){$error["Error"]["recipe"]="not entered";}
-	if(!isset($data['date'])){$error["Error"]["date"]="not entered";}
+	// sanitize
+	$user= 		filter_var($data['user'],FILTER_SANITIZE_STRING);
+	$recipe = 	filter_var($data['recipe'],FILTER_SANITIZE_STRING);
+	$date= 		filter_var($data['date'],FILTER_VALIDATE_INT); // date in epoc
+	$private = 	filter_var($data['private'],FILTER_SANITIZE_STRING);
+
+	if(!$user)		{$error["Error"]["username"]="not entered";}
+	if(!$recipe)	{$error["Error"]["recipe"]="not entered";}
+	if(!$date)		{$error["Error"]["date"]="not entered";}
+	if (!$private) {$error["Error"]["private"]="not entered";}
 
 	// if no error continue
 	if(sizeof($error)==0){
-
 		// init first
 		$db=db_connect($error);
-
 		if($db){
-			// sanitize
-			$user= filter_var($data['user'],FILTER_SANITIZE_STRING);
-			$recipe = filter_var($data['recipe'],FILTER_SANITIZE_STRING);
-			$date= filter_var($data['date'],FILTER_VALIDATE_INT); // date in epoc
-			
-			add_recipe($user,$recipe,$date,$db,$error);
+			add_recipe($user,$recipe,$date,$private,$db,$error);
 
 			// if no error respond
 			if(sizeof($error)==0){
