@@ -46,3 +46,14 @@ function validate_private($private, &$error){
 		return false;
 	}
 }
+
+function validate_phone($phone, &$error){
+	if(preg_match("/^[0-9]{10}$/", $phone)) {
+  		// $phone is valid
+		return true;
+	}
+	else{
+		$error['error']['phone'] = "format is 0000000000 10 digit";
+		return false;
+	}
+}

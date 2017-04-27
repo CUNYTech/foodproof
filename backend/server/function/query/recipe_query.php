@@ -41,8 +41,6 @@ function add_recipe($username, $recipe, $date, $private, $db, &$error){
 
   function get_recipe_list_name_by_uid(int $uid,$db,array &$error){
 	 validate_uid($uid,$error);
-
-
 	 if(sizeof($error)==0){
 		$sql ="SELECT * FROM `recipe` WHERE ";
 		$sql.= "`user_id` ='" . $uid . "'";
@@ -52,7 +50,6 @@ function add_recipe($username, $recipe, $date, $private, $db, &$error){
 
 		return $result;
 	 }
-
   	else{
   		return Null;
   	}
@@ -75,7 +72,7 @@ function add_recipe($username, $recipe, $date, $private, $db, &$error){
   }
 
   function get_all_recipe_and_date_by_user_name($db, &$error){
-  	$sql='SELECT users.name, recipe.created_at, recipe.recipe, recipe.private FROM recipe join users where recipe.user_id=users.id order by users.name';
+  	$sql='SELECT users.name, users.phone, recipe.created_at, recipe.recipe, recipe.private FROM recipe join users where recipe.user_id=users.id order by users.name';
 
   	$result = db_query($db, $sql, $error);
 	if(sizeof($error)>0) return [];
@@ -84,10 +81,9 @@ function add_recipe($username, $recipe, $date, $private, $db, &$error){
 	while($value=db_fetch_assoc($result)){
 		if((int)$value['private']==0){
 			$time = new DateTime($value['created_at']);
-			$recipe_out[]=['user'=>$value['name'], 'meals'=>[$time->getTimestamp(), $value['recipe']]];
+			$recipe_out[]=['user'=>$value['name'], 'meals'=>[$time->getTimestamp(), $value['recipe'], $value['phone']]];
 		}
 	}
-
 	return $recipe_out;
   }
 

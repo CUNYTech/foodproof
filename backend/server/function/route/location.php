@@ -7,9 +7,14 @@ $app->post('/location', function ($request, $response,$args) {
 	$error=[];
 
 	//check if exists
-	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['lat'])){$error["Error"]["lat"]="not entered";}
-	if(!isset($data['lon'])){$error["Error"]["lon"]="not entered";}
+	//read names from post
+	$user 	= filter_var($data['user'],FILTER_SANITIZE_STRING);	
+	$lat 	= filter_var($data['lat'],FILTER_SANITIZE_NUMBER_FLOAT,FILTER_FLAG_ALLOW_FRACTION );
+	$lon 	= filter_var($data['lon'],FILTER_SANITIZE_NUMBER_FLOAT,FILTER_FLAG_ALLOW_FRACTION );
+
+	if(!$user)	{$error["Error"]["username"]="not entered";}
+	if(!$lat)	{$error["Error"]["lat"]="number greater than 0 not entered";}
+	if(!$lon)	{$error["Error"]["lon"]="number greater than 0 not entered";}
 
 	
 	// check if error happened
@@ -17,11 +22,6 @@ $app->post('/location', function ($request, $response,$args) {
 		$db=db_connect($error);
 
 		if($db){
-			//read names from post
-			$user= filter_var($data['user'],FILTER_SANITIZE_STRING);	
-			$lat = filter_var($data['lat'],FILTER_SANITIZE_NUMBER_FLOAT,FILTER_FLAG_ALLOW_FRACTION );
-			$lon = filter_var($data['lon'],FILTER_SANITIZE_NUMBER_FLOAT,FILTER_FLAG_ALLOW_FRACTION );
-
 			// login
 			update_location($user,$lat,$lon,$db,$error);
 

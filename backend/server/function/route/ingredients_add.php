@@ -32,20 +32,18 @@ $app->post('/ingredient/add', function($request, $response, $path = null) {
 	$out=[];
 
 	//check if exists
-	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['ingredient'])){$error["Error"]["ingredient"]="not entered";}
+	// sanitize
+	$user 		=	filter_var($data['user'],FILTER_SANITIZE_STRING);
+	$ingredient = 	filter_var($data['ingredient'],FILTER_SANITIZE_STRING);
+	
+	if(!$user)		{$error["Error"]["username"]="not entered";}
+	if(!$ingredient)	{$error["Error"]["ingredient"]="not entered";}
 	
 	// if no error continue
 	if(sizeof($error)==0){
-
 		// init first
 		$db=db_connect($error);
-
-		if($db){
-			// sanitize
-			$user= filter_var($data['user'],FILTER_SANITIZE_STRING);
-			$ingredient = filter_var($data['ingredient'],FILTER_SANITIZE_STRING);
-			
+		if($db){		
 			// add user
 			$ingredient_id = add_ingredient($user,$ingredient,$db,$error);
 

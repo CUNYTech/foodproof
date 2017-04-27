@@ -128,3 +128,6 @@ ALTER TABLE `recipe`
 alter table `recipe` add constraint `unique_recipe_created_at` unique (`user_id`,`created_at`); 
 ALTER TABLE recipe
 ADD COLUMN private boolean default true;
+
+ALTER TABLE users
+ADD COLUMN phone varchar(10) default '0000000000';

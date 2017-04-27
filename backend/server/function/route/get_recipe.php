@@ -8,20 +8,16 @@ $app->post('/get_recipe', function($request, $response, $path = null) {
 	$out=[];
 
 	//check if exists
-	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
+	// sanitize
+	$user= filter_var($data['user'],FILTER_SANITIZE_STRING);
+	if(!$user){$error["Error"]["username"]="not entered";}
 	
 	// if no error continue
 	if(sizeof($error)==0){
-
 		// init first
 		$db=db_connect($error);
-
-		if($db){
-			// sanitize
-			$user= filter_var($data['user'],FILTER_SANITIZE_STRING);
-			
+		if($db){			
 			$recipe_list = get_recipe_and_date_by_user_name($user,$db,$error);
-
 			// if no error respond
 			if(sizeof($error)==0){
 				$out['Result']='succeed'; 

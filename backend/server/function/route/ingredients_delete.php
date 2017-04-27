@@ -6,20 +6,18 @@ $app->post('/ingredient/delete', function($request, $response, $path = null) {
 	$error=[];
 
 	//check if exists
-	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['ingredient'])){$error["Error"]["ingredient"]="not entered";}
+	// sanitize
+	$user 		= filter_var($data['user'],FILTER_SANITIZE_STRING);
+	$ingredient = filter_var($data['ingredient'],FILTER_SANITIZE_STRING);
+
+	if(!$user)			{$error["Error"]["username"]="not entered";}
+	if(!$ingredient)	{$error["Error"]["ingredient"]="not entered";}
+	
     // if no error continue
 	if(sizeof($error)==0){
-
 		$db=db_connect($error);
-
 		if($db){
-
-			// sanitize
-			$user= filter_var($data['user'],FILTER_SANITIZE_STRING);
-			$ingredient = filter_var($data['ingredient'],FILTER_SANITIZE_STRING);
-
- 			// get uid
+			// get uid
 	      $user_id=get_user_id_by_name($user,$db,$error);
 	      if(sizeof($error)==0) {
 		      $ingredient_id=get_ingredient_id_by_name($ingredient,$db,$error);

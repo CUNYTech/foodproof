@@ -31,10 +31,16 @@ $app->post('/register', function ($request, $response,$args) {
 	$error=[];
 	
 	//check if get required 
-	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['password'])){$error["Error"]["password"]="not entered";}
-	if(!isset($data['email'])){$error["Error"]["email"]= "not entered";}
-	
+	$name 		= filter_var($data['user'],		FILTER_SANITIZE_STRING);
+	$password 	= filter_var($data['password'],	FILTER_SANITIZE_STRING);
+	$email 		= filter_var($data['email'],	FILTER_SANITIZE_STRING);
+	$phone 		= filter_var($data['phone'],	FILTER_SANITIZE_STRING);
+
+	if(!$name)		{$error["Error"]["username"]	="not entered";}
+	if(!$password)	{$error["Error"]["password"]	="not entered";}
+	if(!$email)		{$error["Error"]["email"]		= "not entered";}
+	if(!$phone)		{$error["Error"]["phone"]		= "not entered";}
+
 	// if no error continue
 	if(sizeof($error)==0){
 
@@ -45,9 +51,10 @@ $app->post('/register', function ($request, $response,$args) {
 			$name= filter_var($data['user'],FILTER_SANITIZE_STRING);
 			$password = filter_var($data['password'],FILTER_SANITIZE_STRING);
 			$email = filter_var($data['email'],FILTER_SANITIZE_STRING);
-			
+			$phone = filter_var($data['phone'],FILTER_SANITIZE_STRING);
+
 			// add user
-			$add = add_user($name,$password,$email,$db,$error);
+			$add = add_user($name,$password,$email,$phone,$db,$error);
 			
 			// if no error respond
 			if(sizeof($error)==0){
