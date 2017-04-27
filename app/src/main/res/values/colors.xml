@@ -3,4 +3,9 @@
     <color name="colorPrimary">#cc0000</color>
     <color name="colorPrimaryDark">#990000</color>
     <color name="colorAccent">#ff2400</color>
+    <color name="fab1_color">#4CAF50</color>
+    <color name="fab2_color">#2196F3</color>
+
+
+
 </resources>
