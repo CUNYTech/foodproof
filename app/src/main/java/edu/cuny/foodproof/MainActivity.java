@@ -90,7 +90,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(findIngredients);
     }
 
-
+    @Override
+    public void onBackPressed(){
+        //Prevents back press from returning to main activity
+    }
 
 }
 

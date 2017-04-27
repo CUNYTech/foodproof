@@ -73,16 +73,16 @@ public class Calender extends AppCompatActivity {
         args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
         args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
         caldroidFragment.setArguments(args);
-        caldroidFragment.setCaldroidListener(new CaldroidListener() {
-
-            @Override
-            public void onSelectDate(Date date, View view) {
-                Toast.makeText(getApplicationContext(), date.toString(), Toast.LENGTH_SHORT).show();
-                TextView tView = (TextView) view;
-                tView.setText("My Recipe");
-            }
-
-        });
+//        caldroidFragment.setCaldroidListener(new CaldroidListener() {
+//
+//            @Override
+//            public void onSelectDate(Date date, View view) {
+//                Toast.makeText(getApplicationContext(), date.toString(), Toast.LENGTH_SHORT).show();
+//                TextView tView = (TextView) view;
+//                tView.setText("My Recipe");
+//            }
+//
+//        });
 
         new makePostRequest().execute();
 
