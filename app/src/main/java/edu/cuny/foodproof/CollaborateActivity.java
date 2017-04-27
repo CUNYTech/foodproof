@@ -1,20 +1,21 @@
 package edu.cuny.foodproof;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.roomorama.caldroid.CaldroidFragment;
-import com.roomorama.caldroid.CaldroidListener;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,65 +29,70 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class AddRecipeActivity extends AppCompatActivity {
-    CaldroidFragment caldroidFragment;
-    FragmentTransaction t;
+public class CollaborateActivity extends AppCompatActivity {
+    ListView lvBroadcasts;
+    List<String> phoneNumbers = new ArrayList<>();
+    ArrayAdapter<String> mArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_recipe);
+        setContentView(R.layout.activity_collaborate);
 
-        caldroidFragment = new CaldroidFragment();
-        Bundle args = new Bundle();
-        Calendar cal = Calendar.getInstance();
-        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-        caldroidFragment.setArguments(args);
-        caldroidFragment.setCaldroidListener(new CaldroidListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+        lvBroadcasts = (ListView) findViewById(R.id.lvBroadcasts);
+
+        lvBroadcasts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onSelectDate(Date date, View view) {
-                String recipeName = getIntent().getStringExtra("Recipe");
-                TextView tView = (TextView) view;
-                tView.setText(recipeName);
-                Toast.makeText(getApplicationContext(), "Recipe has been saved to calendar", Toast.LENGTH_LONG).show();
-                new makePostRequest().execute(String.valueOf((date.getTime() / 1000)));
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + phoneNumbers.get(position)));
+
+                if (ActivityCompat.checkSelfPermission(CollaborateActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(CollaborateActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    ActivityCompat.requestPermissions(CollaborateActivity.this,new String[]{Manifest.permission.CALL_PHONE}, 1);
+                }
+
+                startActivity(intent);
             }
+
         });
 
-        t = getSupportFragmentManager().beginTransaction();
-        t.add(R.id.AddCalendar, caldroidFragment).commit();
+        try {
+            new makePostRequest().execute("http://ec2-54-90-187-63.compute-1.amazonaws.com/get_all_recipe");
+        }
+        catch(Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
-
     private class makePostRequest extends AsyncTask<String, Void, String> {
-        String username;
-        String recipeName;
-        String privacyValue;
 
         @Override
         protected void onPreExecute(){
-            SharedPreferences mPrefs = getSharedPreferences("userInfo", 0);
-            username = mPrefs.getString("username", "");
-            recipeName = getIntent().getStringExtra("Recipe");
-            privacyValue = getIntent().getStringExtra("Private");
         }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         protected String doInBackground(String... params){
-            String postParameters = "user=" + username + "&recipe=" + recipeName + "&date=" + params[0] + "&private=" + privacyValue;
+            String postParameters = "";
             byte[] postData = postParameters.getBytes(StandardCharsets.UTF_8);
             int postDataLength = postData.length;
             try {
 
                 String response = "";
-                URL url = new URL("http://ec2-54-90-187-63.compute-1.amazonaws.com/save_recipe");
+
+                URL url = new URL(params[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setDoOutput(true);
                 urlConnection.setInstanceFollowRedirects(false);
@@ -130,22 +136,21 @@ public class AddRecipeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result){
             try {
-                //Converting the response string that was returned from doInBackground() into a JSONObject
-                JSONObject resultJSON = new JSONObject(result);
 
-                //Getting the 'Result' attribute of the JSON
-                String successJSON = resultJSON.getString("Result");
+                JSONObject fullResult = new JSONObject(result);
+                JSONArray resultArray = fullResult.getJSONArray("Recipes");
+                List<String> items = new ArrayList<>();
+                phoneNumbers = new ArrayList<>();
 
-                //Case where the 'Result' attribute is 'success'
-                if(successJSON.equals("succeed")){
-
-                    Toast.makeText(getApplicationContext(), "Recipe has been saved to calendar", Toast.LENGTH_LONG).show();
-
-                    Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    mainIntent.putExtra("loggedIn", "succeeded");
-                    startActivity(mainIntent);
-
+                for(int i = 0; i < resultArray.length(); i++){
+                    items.add(resultArray.getJSONObject(i).getString("user") + " is cooking " + resultArray.getJSONObject(i).getJSONArray("meals").getString(1) + " on " + new Date(resultArray.getJSONObject(i).getJSONArray("meals").getLong(0) * 1000).toString());
+                    phoneNumbers.add(resultArray.getJSONObject(i).getJSONArray("meals").getString(2));
                 }
+
+                mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_ingredients, R.id.tvIngredients2,items);
+
+
+                lvBroadcasts.setAdapter(mArrayAdapter);
             }
             catch(JSONException e){
                 throw new RuntimeException(e);

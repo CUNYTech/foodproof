@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets;
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
     Button btRegister;
-    EditText etName, etEmail, etPassword;
+    EditText etPhone ,etName, etEmail, etPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +36,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         overridePendingTransition(R.anim.slide_right, R.anim.fade_out);
         setContentView(R.layout.activity_register);
 
+        etPhone = (EditText) findViewById(R.id.etPhone);
         etName = (EditText) findViewById(R.id.etName);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPassword = (EditText) findViewById(R.id.etPassword);
@@ -61,6 +62,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     }
 
     private class makePostRequest extends AsyncTask<String, Void, String> {
+        String inPhone;
         String inUsername;
         String inPassword;
         String inEmail;
@@ -70,12 +72,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             inUsername = etName.getText().toString();
             inPassword = etPassword.getText().toString();
             inEmail = etEmail.getText().toString();
+            inPhone = etPhone.getText().toString();
         }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         protected String doInBackground(String... params){
-            String postParameters = "user=" + inUsername + "&password=" + inPassword + "&email=" + inEmail;
+            String postParameters = "user=" + inUsername + "&password=" + inPassword + "&email=" + inEmail + "&phone=" + inPhone;
             byte[] postData = postParameters.getBytes(StandardCharsets.UTF_8);
             int postDataLength = postData.length;
             try {

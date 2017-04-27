@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(searchIntent);
     }
 
+    public void collabClick(View v){
+        Intent searchIntent = new Intent(MainActivity.this, CollaborateActivity.class);
+        startActivity(searchIntent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -65,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent menu_Calender = new Intent(this, Calender.class);
                 startActivity(menu_Calender);
                 return true;
-
 
             default:
                 return super.onOptionsItemSelected(item);

@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,14 +44,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static edu.cuny.foodproof.R.drawable.default_button;
 
 public class Calender extends AppCompatActivity {
     CaldroidFragment caldroidFragment;
     FragmentTransaction t;
+    ListView lvDates;
+    ArrayAdapter<String> mArrayAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -58,6 +64,8 @@ public class Calender extends AppCompatActivity {
         //Standard onCreate() procedures
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calender);
+
+        lvDates = (ListView) findViewById(R.id.lvDates);
 
         caldroidFragment = new CaldroidFragment();
         Bundle args = new Bundle();
@@ -152,12 +160,23 @@ public class Calender extends AppCompatActivity {
 
                 //Case where the 'Result' attribute is 'success'
                 if(resultJSON.getString("Result").equals("succeed")){
+                    List<String> items = new ArrayList<>();
+
 
                     for(int i = 0; i < recipesJSON.length(); i++){
+
                         long date = recipesJSON.getJSONArray(i).getLong(0);
+
+                        items.add(recipesJSON.getJSONArray(i).getString(1) + " on " + new Date(date * 1000).toString());
+
                         caldroidFragment.setBackgroundDrawableForDate(getDrawable(R.drawable.default_button), new Date(date * 1000));
                         caldroidFragment.refreshView();
                     }
+
+                    mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_recipes, R.id.tvRecipes,items);
+
+                    lvDates.setAdapter(mArrayAdapter);
+
 
                 }
             }
