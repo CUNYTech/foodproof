@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:text="Add Ingredients"
         android:onClick="buttonClick"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="70dp"
         />
 
     <Button
@@ -49,28 +49,15 @@
         />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/button3"
         android:layout_alignRight="@+id/button2"
-        android:text="Find Ingredients"
-        android:layout_marginTop="50dp"
-        android:onClick="findIngredients"
-        />
-    <Button
-        android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/button4"
-        android:layout_alignRight="@+id/button2"
         android:text="Give me a recipe"
         android:layout_marginTop="50dp"
         android:onClick="findARecipe"
-
-
         />
 
 

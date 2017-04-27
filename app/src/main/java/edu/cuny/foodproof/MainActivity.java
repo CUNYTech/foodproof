@@ -88,10 +88,6 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
 
     }
-    public void findIngredients (View view){
-        Intent findIngredients = new Intent (this, MapsActivity.class);
-        startActivity(findIngredients);
-    }
 
 
     private boolean CheckGooglePlayServices() {
