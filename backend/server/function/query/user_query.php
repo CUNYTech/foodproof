@@ -4,23 +4,28 @@ declare(strict_types=1);
 // import db if not here
   include_once DB;
   // user query
-  function add_user($name, $password, $email,$db, &$error){
-      $created_at = date("Y-m-d H:i:s");
-      $sql = "INSERT INTO users";
-      $sql .= "(name,email,password,created_at) ";
-      $sql .= "VALUES (";
-      $sql .= "'" . db_escape($db, $name) . "',";
-      $sql .= "'" . db_escape($db, $email). "',";
-      $sql .= "'" . db_escape($db, $password) . "',";
-      $sql .= "'" . $created_at . "'";
-      $sql .= ");";
+  function add_user($name, $password, $email,$phone, $db, &$error){
+      validate_phone($phone, $error);
+      if(sizeof($error)==0){
+          $created_at = date("Y-m-d H:i:s");
+          $sql = "INSERT INTO users";
+          $sql .= "(name,email,password,phone,created_at) ";
+          $sql .= "VALUES (";
+          $sql .= "'" . db_escape($db, $name) . "',";
+          $sql .= "'" . db_escape($db, $email). "',";
+          $sql .= "'" . db_escape($db, $password) . "',";
+          $sql .= "'" . db_escape($db, $phone) . "',";
+          $sql .= "'" . $created_at . "'";
+          $sql .= ");";
 
       // For INSERT statements, $result is just true/false
       $result = db_query($db, $sql, $error);
       
       if(!$result){return false;}
       else{return true;}
+      }
 
+      return false;  
   }
 
  function login_user($name,$password,$db,&$error){

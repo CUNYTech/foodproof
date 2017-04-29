@@ -29,19 +29,16 @@ $app->post('/ingredient/return', function($request, $response, $path = null) {
 	$error=[];
 
 	//check if exists
-	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['count'])){$error["Error"]["count"]="not entered";}
+	// sanitize
+	$user 		= filter_var($data['user'],FILTER_SANITIZE_STRING);
+	$num 		= filter_var($data['count'],FILTER_SANITIZE_NUMBER_INT);	
+	if(!$user)	{$error["Error"]["username"]="not entered";}
+	if(!$num )	{$error["Error"]["count"]="count greater than 1 not entered";}
 	
 	// if no error continue
 	if(sizeof($error)==0){
-
 		$db=db_connect($error);
-
 		if($db){
-			// sanitize
-			$user= filter_var($data['user'],FILTER_SANITIZE_STRING);
-			$num = filter_var($data['count'],FILTER_SANITIZE_NUMBER_INT);
-			
 			// add user
 			$list['ingredients'] = user_ingredient_list($user,$num,$db,$error);
 			

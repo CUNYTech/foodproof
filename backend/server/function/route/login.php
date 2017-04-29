@@ -33,8 +33,12 @@ $app->post('/login', function ($request, $response,$args) {
 	$error=[];
 
 	//check if exists
-	if(!isset($data['user'])){$error["Error"]["username"]="not entered";}
-	if(!isset($data['password'])){$error["Error"]["password"]="not entered";}
+	//read names from post
+	$name 		= filter_var($data['user'],FILTER_SANITIZE_STRING);	
+	$password 	= filter_var($data['password'],FILTER_SANITIZE_STRING);
+	
+	if(!$name)		{$error["Error"]["username"]="not entered";}
+	if(!$password)	{$error["Error"]["password"]="not entered";}
 	
 	// check if error happened
 	if (sizeof($error)==0){
@@ -43,10 +47,6 @@ $app->post('/login', function ($request, $response,$args) {
 		$db=db_connect($error);
 
 		if($db){
-			//read names from post
-			$name= filter_var($data['user'],FILTER_SANITIZE_STRING);	
-			$password = filter_var($data['password'],FILTER_SANITIZE_STRING);
-
 			// login
 			login_user($name,$password,$db,$error);
 
